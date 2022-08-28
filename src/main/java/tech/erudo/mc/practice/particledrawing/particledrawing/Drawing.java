@@ -1,12 +1,11 @@
-package tech.erudo.mc.practice.particledrawing.particledrawing.drawing;
+package tech.erudo.mc.practice.particledrawing.particledrawing;
 
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.util.Vector;
 
-public class Circle {
-
-    public void drawCircle(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
+public class Drawing {
+    public void drawCircle(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i ++) {
             double angle = i * 2 * Math.PI / points;
             Vector point = new Vector(radius * Math.cos(angle), 0, radius * Math.sin(angle));
@@ -15,7 +14,20 @@ public class Circle {
             rotZ(point, rotZ);
             origin.add(point);
             // spawn something at origin
-            origin.getWorld().spawnParticle(particle, origin, 10);
+            origin.getWorld().spawnParticle(Particle.SPELL_INSTANT, origin, 10);
+            origin.subtract(point);
+        }
+    }
+
+    public void drawSpiral(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
+        for (int i = 0; i < points; i++) {
+            double angle = i * 8 * Math.PI / points;
+            Vector point = new Vector(radius * angle * Math.sin(angle), 0, radius * angle * Math.cos(angle));
+            rotX(point, rotX);
+            rotY(point, rotY);
+            rotZ(point, rotZ);
+            origin.add(point);
+            origin.getWorld().spawnParticle(Particle.SPELL_INSTANT, origin, 1, 0, 0, 0);
             origin.subtract(point);
         }
     }
@@ -39,4 +51,5 @@ public class Circle {
         point.setX(x * Math.cos(angle) - point.getY() * Math.sin(angle));
         point.setY(x * Math.sin(angle) + point.getY() * Math.cos(angle));
     }
+
 }
