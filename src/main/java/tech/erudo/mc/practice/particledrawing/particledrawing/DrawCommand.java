@@ -41,4 +41,11 @@ public class DrawCommand {
         spiral.drawConicSpiral(loc, 0.2, 300, 0, 0,0);
     }
 
+    @Subcommand("cylinderspiral")
+    public static void cylinderspiral(Player player) {
+        Location loc = player.getLocation();
+        Drawing spiral = new Drawing();
+        spiral.drawCylinderSpiral(loc, 0.2, 300, 0, 0,0);
+    }
+
 }
