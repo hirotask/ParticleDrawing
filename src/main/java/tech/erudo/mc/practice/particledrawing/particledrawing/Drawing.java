@@ -32,6 +32,19 @@ public class Drawing {
         }
     }
 
+    public void drawConicSpiral(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
+        for(int i=0; i < points; i++) {
+            double angle = i * 8 * Math.PI / points;
+            Vector point = new Vector(radius * angle * Math.sin(angle), angle, radius * angle * Math.cos(angle));
+            rotX(point, rotX);
+            rotY(point, rotY);
+            rotZ(point, rotZ);
+            origin.add(point);
+            origin.getWorld().spawnParticle(Particle.SPELL_INSTANT, origin, 1, 0, 0, 0);
+            origin.subtract(point);
+        }
+    }
+
 
 
     private void rotX(Vector point, double angle) {
