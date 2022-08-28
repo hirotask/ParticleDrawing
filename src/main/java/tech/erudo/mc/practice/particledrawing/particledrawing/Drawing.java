@@ -6,7 +6,7 @@ import org.bukkit.util.Vector;
 
 public class Drawing {
     public void drawCircle(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
-        for (int i = 0; i < points; i ++) {
+        for (int i = 0; i < points; i++) {
             double t = i * 2 * Math.PI / points;
             Vector point = new Vector(radius * Math.cos(t), 0, radius * Math.sin(t));
             rotX(point, rotX);
@@ -33,7 +33,7 @@ public class Drawing {
     }
 
     public void drawConicSpiral(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
-        for(int i=0; i < points; i++) {
+        for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
             Vector point = new Vector(radius * t * Math.sin(t), radius * t, radius * t * Math.cos(t));
             rotX(point, rotX);
@@ -46,9 +46,9 @@ public class Drawing {
     }
 
     public void drawCylinderSpiral(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
-        for(int i=0; i < points; i++) {
+        for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
-            Vector point = new Vector(radius*Math.sin(t), radius*t, radius*Math.cos(t));
+            Vector point = new Vector(radius * Math.sin(t), radius * t, radius * Math.cos(t));
             rotX(point, rotX);
             rotY(point, rotY);
             rotZ(point, rotZ);
@@ -58,6 +58,22 @@ public class Drawing {
         }
     }
 
+    public void drawSpiralSphere(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
+        for (int i = 0; i < points; i++) {
+            double t = i * 8 * Math.PI / points;
+            Vector point = new Vector(
+                    radius * Math.sin(t / 10 * Math.PI),
+                    radius * Math.sin((t % 10) * Math.PI) * Math.cos(t / 10 * Math.PI),
+                    radius * Math.cos((t % 10) * Math.PI) * Math.cos(t / 10 * Math.PI)
+            );
+            rotX(point, rotX);
+            rotY(point, rotY);
+            rotZ(point, rotZ);
+            origin.add(point);
+            origin.getWorld().spawnParticle(Particle.SPELL_INSTANT, origin, 1, 0, 0, 0);
+            origin.subtract(point);
+        }
+    }
 
 
     private void rotX(Vector point, double t) {
