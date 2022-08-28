@@ -1,0 +1,7 @@
+name: ParticleDrawing
+version: '${version}'
+main: tech.erudo.mc.practice.particledrawing.particledrawing.ParticleDrawing
+api-version: 1.18
+authors: [ hirotask ]
+description: パーティクルで様々な図形を描画する
+depend: [CommandAPI]
