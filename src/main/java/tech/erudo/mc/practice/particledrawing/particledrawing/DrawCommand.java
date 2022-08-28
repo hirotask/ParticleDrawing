@@ -9,6 +9,7 @@ import org.bukkit.Particle;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.erudo.mc.practice.particledrawing.particledrawing.drawing.Circle;
+import tech.erudo.mc.practice.particledrawing.particledrawing.drawing.Spiral;
 
 @Command("draw")
 public class DrawCommand {
@@ -27,6 +28,13 @@ public class DrawCommand {
         Location loc = player.getLocation();
         Circle circle = new Circle();
         circle.drawCircle(loc, Particle.SPELL, 3, 50, Math.PI / 2,0,0);
+    }
+
+    @Subcommand("spiral")
+    public static void spiral(Player player) {
+        Location loc = player.getLocation();
+        Spiral spiral = new Spiral();
+        spiral.drawSpiral(loc, 0.4, 300);
     }
 
 }

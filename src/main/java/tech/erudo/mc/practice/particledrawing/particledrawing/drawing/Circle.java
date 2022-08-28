@@ -20,6 +20,8 @@ public class Circle {
         }
     }
 
+
+
     private void rotX(Vector point, double angle) {
         double y = point.getY();
         point.setY(y * Math.cos(angle) - point.getZ() * Math.sin(angle));
