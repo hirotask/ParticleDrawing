@@ -59,7 +59,7 @@ public class DrawCommand {
     public static void asteroid(Player player) {
         Location loc = player.getLocation();
         Drawing drawing = new Drawing();
-        drawing.drawSpiralSphere(loc, 2, 400, 0, 0,0);
+        drawing.drawAsteroid(loc, 2, 100, 0, 0,0);
     }
 
 }

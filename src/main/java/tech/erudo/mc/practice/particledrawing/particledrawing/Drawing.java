@@ -75,6 +75,23 @@ public class Drawing {
         }
     }
 
+    public void drawAsteroid(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
+        for (int i = 0; i < points; i++) {
+            double t = i * 8 * Math.PI / points;
+            Vector point = new Vector(
+                    radius * Math.pow(Math.cos(t),3),
+                    0,
+                    radius * Math.pow(Math.sin(t), 3)
+            );
+            rotX(point, rotX);
+            rotY(point, rotY);
+            rotZ(point, rotZ);
+            origin.add(point);
+            origin.getWorld().spawnParticle(Particle.SPELL_INSTANT, origin, 1, 0, 0, 0);
+            origin.subtract(point);
+        }
+    }
+
 
     private void rotX(Vector point, double t) {
         double y = point.getY();
