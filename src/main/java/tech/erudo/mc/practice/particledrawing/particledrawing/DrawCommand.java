@@ -3,7 +3,9 @@ package tech.erudo.mc.practice.particledrawing.particledrawing;
 import dev.jorel.commandapi.annotations.Command;
 import dev.jorel.commandapi.annotations.Default;
 import dev.jorel.commandapi.annotations.Subcommand;
+import dev.jorel.commandapi.annotations.arguments.AParticleArgument;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.erudo.mc.practice.particledrawing.particledrawing.drawing.Circle;
@@ -24,7 +26,7 @@ public class DrawCommand {
     public static void circle(Player player) {
         Location loc = player.getLocation();
         Circle circle = new Circle();
-        circle.drawCircle(loc, 3, 50, 0,0,0);
+        circle.drawCircle(loc, Particle.SPELL, 3, 50, Math.PI / 2,0,0);
     }
 
 }
