@@ -11,13 +11,13 @@ public class Drawing {
 
     /**
      * 指定したパーティクルで円を描画するメソッド
-     * @param origin
-     * @param particle
-     * @param radius
-     * @param points
-     * @param rotX
-     * @param rotY
-     * @param rotZ
+     * @param origin: 描画するLocation
+     * @param particle: パーティクルの種類
+     * @param radius: 円の半径
+     * @param points: 図形を成す点の数
+     * @param rotX: X軸回りに回転する角度
+     * @param rotY: Y軸回りに回転する角度
+     * @param rotZ: Z軸回りに回転する角度
      */
     public void drawCircle(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
@@ -33,6 +33,16 @@ public class Drawing {
         }
     }
 
+    /**
+     * 指定したパーティクルで渦巻を描画するメソッド
+     * @param origin: 描画するLocation
+     * @param particle: パーティクルの種類
+     * @param radius: 渦巻の真ん中の半径
+     * @param points: 図形を成す点の数
+     * @param rotX: X軸回りに回転する角度
+     * @param rotY: Y軸回りに回転する角度
+     * @param rotZ: Z軸回りに回転する角度
+     */
     public void drawSpiral(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
@@ -46,6 +56,16 @@ public class Drawing {
         }
     }
 
+    /**
+     * 指定したパーティクルで円錐形の渦巻を描画するメソッド
+     * @param origin: 描画するLocation
+     * @param particle: パーティクルの種類
+     * @param radius: 渦巻の真ん中の半径
+     * @param points: 図形を成す点の数
+     * @param rotX: X軸回りに回転する角度
+     * @param rotY: Y軸回りに回転する角度
+     * @param rotZ: Z軸回りに回転する角度
+     */
     public void drawConicSpiral(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
@@ -59,6 +79,16 @@ public class Drawing {
         }
     }
 
+    /**
+     * 指定したパーティクルで円柱形の渦巻を描画するメソッド
+     * @param origin: 描画するLocation
+     * @param particle: パーティクルの種類
+     * @param radius: 渦巻の真ん中の半径
+     * @param points: 図形を成す点の数
+     * @param rotX: X軸回りに回転する角度
+     * @param rotY: Y軸回りに回転する角度
+     * @param rotZ: Z軸回りに回転する角度
+     */
     public void drawCylinderSpiral(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
@@ -72,6 +102,16 @@ public class Drawing {
         }
     }
 
+    /**
+     * 指定したパーティクルで渦巻からなる球形を描画するメソッド
+     * @param origin: 描画するLocation
+     * @param particle: パーティクルの種類
+     * @param radius: 球の半径
+     * @param points: 図形を成す点の数
+     * @param rotX: X軸回りに回転する角度
+     * @param rotY: Y軸回りに回転する角度
+     * @param rotZ: Z軸回りに回転する角度
+     */
     public void drawSpiralSphere(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
@@ -89,6 +129,16 @@ public class Drawing {
         }
     }
 
+    /**
+     * 指定したパーティクルでアステロイドを描画するメソッド
+     * @param origin: 描画するLocation
+     * @param particle: パーティクルの種類
+     * @param radius: アステロイドの半径
+     * @param points: 図形を成す点の数
+     * @param rotX: X軸回りに回転する角度
+     * @param rotY: Y軸回りに回転する角度
+     * @param rotZ: Z軸回りに回転する角度
+     */
     public void drawAsteroid(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
@@ -106,19 +156,33 @@ public class Drawing {
         }
     }
 
-
+    /**
+     * 与えたVectorをX軸回りでtだけ回転させる
+     * @param point: 回転させたいVector
+     * @param t: 角度
+     */
     private void rotX(Vector point, double t) {
         double y = point.getY();
         point.setY(y * Math.cos(t) - point.getZ() * Math.sin(t));
         point.setZ(y * Math.sin(t) + point.getZ() * Math.cos(t));
     }
 
+    /**
+     * 与えたVectorをY軸回りでtだけ回転させる
+     * @param point: 回転させたいVector
+     * @param t: 角度
+     */
     private void rotY(Vector point, double t) {
         double z = point.getZ();
         point.setZ(z * Math.cos(t) - point.getX() * Math.sin(t));
         point.setX(z * Math.sin(t) + point.getX() * Math.cos(t));
     }
 
+    /**
+     * 与えたVectorをZ軸回りでtだけ回転させる
+     * @param point: 回転させたいVector
+     * @param t: 角度
+     */
     private void rotZ(Vector point, double t) {
         double x = point.getX();
         point.setX(x * Math.cos(t) - point.getY() * Math.sin(t));
