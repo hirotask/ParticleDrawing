@@ -25,37 +25,37 @@ public class DrawCommand {
     @Subcommand("circle")
     public static void circle(Player player) {
         Location loc = player.getLocation();
-        drawing.drawCircle(loc,3, 50, Math.PI / 2,0,0);
+        drawing.drawCircle(loc, Particle.SPELL_INSTANT, 3, 50, Math.PI / 2, 0, 0);
     }
 
     @Subcommand("spiral")
     public static void spiral(Player player) {
         Location loc = player.getLocation();
-        drawing.drawSpiral(loc, 0.2, 300, 0, 0,0);
+        drawing.drawSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
     }
 
     @Subcommand("conicspiral")
     public static void conicSpiral(Player player) {
         Location loc = player.getLocation();
-        drawing.drawConicSpiral(loc, 0.2, 300, 0, 0,0);
+        drawing.drawConicSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
     }
 
     @Subcommand("cylinderspiral")
     public static void cylinderspiral(Player player) {
         Location loc = player.getLocation();
-        drawing.drawCylinderSpiral(loc, 2, 300, 0, 0,0);
+        drawing.drawCylinderSpiral(loc, Particle.SPELL_INSTANT, 2, 300, 0, 0, 0);
     }
 
     @Subcommand("spiralsphere")
     public static void spiralSphere(Player player) {
         Location loc = player.getLocation();
-        drawing.drawSpiralSphere(loc, 2, 400, 0, 0,0);
+        drawing.drawSpiralSphere(loc, Particle.SPELL_INSTANT, 2, 400, 0, 0, 0);
     }
 
     @Subcommand("asteroid")
     public static void asteroid(Player player) {
         Location loc = player.getLocation();
-        drawing.drawAsteroid(loc, 2, 100, 0, 0,0);
+        drawing.drawAsteroid(loc, Particle.SPELL_INSTANT, 2, 100, 0, 0, 0);
     }
 
 }

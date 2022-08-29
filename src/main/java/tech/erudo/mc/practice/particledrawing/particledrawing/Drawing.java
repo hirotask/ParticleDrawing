@@ -4,8 +4,22 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.util.Vector;
 
+/**
+ * パーティクルで様々な形を作り描画してくれるクラス
+ */
 public class Drawing {
-    public void drawCircle(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
+
+    /**
+     * 指定したパーティクルで円を描画するメソッド
+     * @param origin
+     * @param particle
+     * @param radius
+     * @param points
+     * @param rotX
+     * @param rotY
+     * @param rotZ
+     */
+    public void drawCircle(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 2 * Math.PI / points;
             Vector point = new Vector(radius * Math.cos(t), 0, radius * Math.sin(t));
@@ -14,12 +28,12 @@ public class Drawing {
             rotZ(point, rotZ);
             origin.add(point);
             // spawn something at origin
-            origin.getWorld().spawnParticle(Particle.SPELL_INSTANT, origin, 10);
+            origin.getWorld().spawnParticle(particle, origin, 10);
             origin.subtract(point);
         }
     }
 
-    public void drawSpiral(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
+    public void drawSpiral(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
             Vector point = new Vector(radius * t * Math.sin(t), 0, radius * t * Math.cos(t));
@@ -27,12 +41,12 @@ public class Drawing {
             rotY(point, rotY);
             rotZ(point, rotZ);
             origin.add(point);
-            origin.getWorld().spawnParticle(Particle.SPELL_INSTANT, origin, 1, 0, 0, 0);
+            origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
             origin.subtract(point);
         }
     }
 
-    public void drawConicSpiral(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
+    public void drawConicSpiral(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
             Vector point = new Vector(radius * t * Math.sin(t), radius * t, radius * t * Math.cos(t));
@@ -40,12 +54,12 @@ public class Drawing {
             rotY(point, rotY);
             rotZ(point, rotZ);
             origin.add(point);
-            origin.getWorld().spawnParticle(Particle.SPELL_INSTANT, origin, 1, 0, 0, 0);
+            origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
             origin.subtract(point);
         }
     }
 
-    public void drawCylinderSpiral(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
+    public void drawCylinderSpiral(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
             Vector point = new Vector(radius * Math.sin(t), radius * t, radius * Math.cos(t));
@@ -53,12 +67,12 @@ public class Drawing {
             rotY(point, rotY);
             rotZ(point, rotZ);
             origin.add(point);
-            origin.getWorld().spawnParticle(Particle.SPELL_INSTANT, origin, 1, 0, 0, 0);
+            origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
             origin.subtract(point);
         }
     }
 
-    public void drawSpiralSphere(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
+    public void drawSpiralSphere(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
             Vector point = new Vector(
@@ -70,12 +84,12 @@ public class Drawing {
             rotY(point, rotY);
             rotZ(point, rotZ);
             origin.add(point);
-            origin.getWorld().spawnParticle(Particle.SPELL_INSTANT, origin, 1, 0, 0, 0);
+            origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
             origin.subtract(point);
         }
     }
 
-    public void drawAsteroid(Location origin, double radius, int points, double rotX, double rotY, double rotZ) {
+    public void drawAsteroid(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
             Vector point = new Vector(
@@ -87,7 +101,7 @@ public class Drawing {
             rotY(point, rotY);
             rotZ(point, rotZ);
             origin.add(point);
-            origin.getWorld().spawnParticle(Particle.SPELL_INSTANT, origin, 1, 0, 0, 0);
+            origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
             origin.subtract(point);
         }
     }
