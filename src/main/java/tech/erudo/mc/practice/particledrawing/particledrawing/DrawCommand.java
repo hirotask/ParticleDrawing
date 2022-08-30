@@ -64,4 +64,10 @@ public class DrawCommand {
         drawing.drawHeart(loc, Particle.SPELL_INSTANT, 1, 100, 0, 0, 0);
     }
 
+    @Subcommand("lissajous")
+    public static void lissajous(Player player) {
+        Location loc = player.getLocation();
+        drawing.drawLissajous(loc, Particle.SPELL_INSTANT, 2,3,2,1,Math.PI / 6,100,0,0,0);
+    }
+
 }
