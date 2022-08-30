@@ -172,7 +172,7 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public void drawHeart(Location origin, Particle particle, int size, int points, double rotX, double rotY, double rotZ) {
+    public void drawHeart(Location origin, Particle particle, double size, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 2 * Math.PI / points;
             Vector point = new Vector(
