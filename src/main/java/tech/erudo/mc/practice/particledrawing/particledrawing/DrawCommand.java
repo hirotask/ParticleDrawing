@@ -58,4 +58,10 @@ public class DrawCommand {
         drawing.drawAsteroid(loc, Particle.SPELL_INSTANT, 2, 100, 0, 0, 0);
     }
 
+    @Subcommand("heart")
+    public static void heart(Player player) {
+        Location loc = player.getLocation();
+        drawing.drawHeart(loc, Particle.SPELL_INSTANT, 1, 100, 0, 0, 0);
+    }
+
 }
