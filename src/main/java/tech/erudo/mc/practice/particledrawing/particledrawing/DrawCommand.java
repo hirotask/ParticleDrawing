@@ -70,4 +70,10 @@ public class DrawCommand {
         drawing.drawLissajous(loc, Particle.SPELL_INSTANT, 2,3,2,1,Math.PI / 6,100,0,0,0);
     }
 
+    @Subcommand("limason")
+    public static void limason(Player player) {
+        Location loc = player.getLocation();
+        drawing.drawLimason(loc, Particle.SPELL_INSTANT, 1, 100, 0,0,0);
+    }
+
 }

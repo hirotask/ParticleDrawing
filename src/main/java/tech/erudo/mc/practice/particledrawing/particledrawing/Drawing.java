@@ -225,6 +225,35 @@ public class Drawing {
     }
 
     /**
+     * 指定したパーティクルでリマソン曲線を描画するメソッド
+     *
+     * @param origin:   描画するLocation
+     * @param particle: パーティクルの種類
+     * @param size:     大きさ（１がデフォルト）
+     * @param points:   図形を成す点の数
+     * @param rotX:     X軸回りに回転する角度
+     * @param rotY:     Y軸回りに回転する角度
+     * @param rotZ:     Z軸回りに回転する角度
+     */
+    public void drawLimason(Location origin, Particle particle, double size, int points, double rotX, double rotY, double rotZ) {
+        for (int i=0; i < points; i++) {
+            double t = i * 2 * Math.PI / points;
+            Vector point = new Vector(
+                    size * (1 + 2 * Math.cos(t)) * Math.cos(t),
+                    0,
+                    size * (1 + 2 * Math.cos(t)) * Math.sin(t)
+            );
+            rotX(point, rotX);
+            rotY(point, rotY);
+            rotZ(point, rotZ);
+            origin.add(point);
+            origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
+            origin.subtract(point);
+        }
+    }
+
+
+    /**
      * 与えたVectorをX軸回りでtだけ回転させる
      *
      * @param point: 回転させたいVector
