@@ -76,4 +76,10 @@ public class DrawCommand {
         drawing.drawLimason(loc, Particle.SPELL_INSTANT, 1, 100, 0,0,0);
     }
 
+    @Subcommand("cycloid")
+    public static void cycloid(Player player) {
+        Location loc = player.getLocation();
+        drawing.drawCycloid(loc, Particle.SPELL_INSTANT, 1, 3, 100,0,0,0);
+    }
+
 }

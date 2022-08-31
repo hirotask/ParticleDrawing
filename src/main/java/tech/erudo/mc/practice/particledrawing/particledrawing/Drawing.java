@@ -252,6 +252,37 @@ public class Drawing {
         }
     }
 
+    /**
+     * 指定したパーティクルでリサージュ曲線を描画するメソッド
+     * 数式は以下の通り
+     * x = a(t - sin(t))
+     * y = a(1 - cos(t))
+     * @param origin:   描画するLocation
+     * @param particle: パーティクルの種類
+     * @param a:        一回転の長さ
+     * @param scrollNum:回転回数
+     * @param points:   図形を成す点の数
+     * @param rotX:     X軸回りに回転する角度
+     * @param rotY:     Y軸回りに回転する角度
+     * @param rotZ:     Z軸回りに回転する角度
+     */
+    public void drawCycloid(Location origin, Particle particle, double a, double scrollNum, int points, double rotX, double rotY, double rotZ) {
+        for (int i=0; i < points; i++) {
+            double t = i * scrollNum * 2 * Math.PI / points;
+            Vector point = new Vector(
+                    a * (t - Math.sin(t)),
+                    0,
+                    a * (1 - Math.cos(t))
+            );
+            rotX(point, rotX);
+            rotY(point, rotY);
+            rotZ(point, rotZ);
+            origin.add(point);
+            origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
+            origin.subtract(point);
+        }
+    }
+
 
     /**
      * 与えたVectorをX軸回りでtだけ回転させる
