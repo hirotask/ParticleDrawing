@@ -8,11 +8,18 @@ public final class ParticleDrawing extends JavaPlugin {
     @Override
     public void onEnable() {
         CommandAPI.registerCommand(DrawCommand.class);
-
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public static ParticleDrawing getInstance() {
+        return PluginInstanceHolder.INSTANCE;
+    }
+
+    static class PluginInstanceHolder {
+        private static final ParticleDrawing INSTANCE = new ParticleDrawing();
     }
 }

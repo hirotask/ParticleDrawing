@@ -2,12 +2,21 @@ package tech.erudo.mc.practice.particledrawing.particledrawing;
 
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 /**
  * パーティクルで様々な形を作り描画してくれるクラス
  */
 public class Drawing {
+
+    private JavaPlugin plugin;
+
+    public Drawing(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
+
 
     /**
      * 指定したパーティクルで円を描画するメソッド
@@ -32,6 +41,43 @@ public class Drawing {
             origin.getWorld().spawnParticle(particle, origin, 10);
             origin.subtract(point);
         }
+    }
+
+    /**
+     * 指定したパーティクルでアニメーションする円を描画するメソッド
+     *
+     * @param origin:   描画するLocation
+     * @param particle: パーティクルの種類
+     * @param radius:   円の半径
+     * @param points:   図形を成す点の数
+     * @param rotX:     X軸回りに回転する角度
+     * @param rotY:     Y軸回りに回転する角度
+     * @param rotZ:     Z軸回りに回転する角度
+     * @param isLoop:   ループするか
+     */
+    public void drawAnimCircle(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ, boolean isLoop) {
+        new BukkitRunnable() {
+
+            int i = 0;
+
+            @Override
+            public void run() {
+                if(i < points) {
+                    double t = i * 2 * Math.PI / points;
+                    Vector point = new Vector(radius * Math.cos(t), 0, radius * Math.sin(t));
+                    rotX(point, rotX);
+                    rotY(point, rotY);
+                    rotZ(point, rotZ);
+                    origin.add(point);
+                    // spawn something at origin
+                    origin.getWorld().spawnParticle(particle, origin, 10);
+                    origin.subtract(point);
+                } else {
+                    this.cancel();
+                }
+                i++;
+            }
+        }.runTaskTimer(plugin,0,1);
     }
 
     /**

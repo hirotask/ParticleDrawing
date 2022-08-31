@@ -15,7 +15,7 @@ public class DrawCommand {
             "Helpです"
     };
 
-    private static final Drawing drawing = new Drawing();
+    private static final Drawing drawing = new Drawing(ParticleDrawing.getInstance());
 
     @Default
     public static void draw(CommandSender sender) {
@@ -26,6 +26,12 @@ public class DrawCommand {
     public static void circle(Player player) {
         Location loc = player.getLocation();
         drawing.drawCircle(loc, Particle.SPELL_INSTANT, 3, 50, Math.PI / 2, 0, 0);
+    }
+
+    @Subcommand("animcircle")
+    public static void animCircle(Player player) {
+        Location loc = player.getLocation();
+        drawing.drawAnimCircle(loc, Particle.SPELL_INSTANT, 3, 50, 0,0,0,false);
     }
 
     @Subcommand("spiral")
