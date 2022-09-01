@@ -27,7 +27,7 @@ public class DrawCommand {
     public static void circle(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
         if(isAnim) {
-            drawing.drawAnimCircle(loc, Particle.SPELL_INSTANT, 3, 50, 0,0,0);
+            drawing.drawAnimCircle(loc, Particle.NOTE, 3, 50, 0,0,0);
         } else {
             drawing.drawCircle(loc, Particle.SPELL_INSTANT, 3, 50, 0, 0, 0);
         }
@@ -38,7 +38,7 @@ public class DrawCommand {
     public static void spiral(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
         if(isAnim) {
-            drawing.drawAnimSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
+            drawing.drawAnimSpiral(loc, Particle.NOTE, 0.2, 300, 0, 0, 0);
         } else {
             drawing.drawSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
         }
@@ -48,7 +48,7 @@ public class DrawCommand {
     public static void conicSpiral(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
         if(isAnim) {
-            drawing.drawAnimConicSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
+            drawing.drawAnimConicSpiral(loc, Particle.NOTE, 0.2, 300, 0, 0, 0);
         } else {
             drawing.drawConicSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
         }

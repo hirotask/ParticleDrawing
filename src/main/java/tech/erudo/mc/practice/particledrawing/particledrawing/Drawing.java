@@ -6,6 +6,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * パーティクルで様々な形を作り描画してくれるクラス
  */
@@ -55,6 +58,7 @@ public class Drawing {
      * @param rotZ:     Z軸回りに回転する角度
      */
     public void drawAnimCircle(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
+
         new BukkitRunnable() {
 
             int i = 0;
@@ -69,7 +73,7 @@ public class Drawing {
                     rotZ(point, rotZ);
                     origin.add(point);
                     // spawn something at origin
-                    origin.getWorld().spawnParticle(particle, origin, 10);
+                    origin.getWorld().spawnParticle(particle, origin, 1);
                     origin.subtract(point);
                 } else {
                     this.cancel();
@@ -77,6 +81,8 @@ public class Drawing {
                 i++;
             }
         }.runTaskTimer(plugin, 0, 1);
+
+
     }
 
     /**
@@ -115,8 +121,8 @@ public class Drawing {
      * @param rotZ:     Z軸回りに回転する角度
      */
     public void drawAnimSpiral(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
-        new BukkitRunnable() {
 
+        new BukkitRunnable() {
             int i = 0;
 
             @Override
@@ -128,7 +134,8 @@ public class Drawing {
                     rotY(point, rotY);
                     rotZ(point, rotZ);
                     origin.add(point);
-                    origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
+                    // spawn something at origin
+                    origin.getWorld().spawnParticle(particle, origin, 1);
                     origin.subtract(point);
                 } else {
                     this.cancel();
@@ -137,6 +144,8 @@ public class Drawing {
                 i++;
             }
         }.runTaskTimer(plugin, 0, 1);
+
+
     }
 
     /**
