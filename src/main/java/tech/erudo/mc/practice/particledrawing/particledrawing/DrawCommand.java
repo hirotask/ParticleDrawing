@@ -48,7 +48,7 @@ public class DrawCommand {
     public static void conicSpiral(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
         if(isAnim) {
-
+            drawing.drawAnimConicSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
         } else {
             drawing.drawConicSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
         }

@@ -61,7 +61,7 @@ public class Drawing {
 
             @Override
             public void run() {
-                if(i < points) {
+                if (i < points) {
                     double t = i * 2 * Math.PI / points;
                     Vector point = new Vector(radius * Math.cos(t), 0, radius * Math.sin(t));
                     rotX(point, rotX);
@@ -76,7 +76,7 @@ public class Drawing {
                 }
                 i++;
             }
-        }.runTaskTimer(plugin,0,1);
+        }.runTaskTimer(plugin, 0, 1);
     }
 
     /**
@@ -121,7 +121,7 @@ public class Drawing {
 
             @Override
             public void run() {
-                if(i < points) {
+                if (i < points) {
                     double t = i * 8 * Math.PI / points;
                     Vector point = new Vector(radius * t * Math.sin(t), 0, radius * t * Math.cos(t));
                     rotX(point, rotX);
@@ -136,7 +136,7 @@ public class Drawing {
 
                 i++;
             }
-        }.runTaskTimer(plugin,0,1);
+        }.runTaskTimer(plugin, 0, 1);
     }
 
     /**
@@ -161,6 +161,42 @@ public class Drawing {
             origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
             origin.subtract(point);
         }
+    }
+
+    /**
+     * 指定したパーティクルでアニメーションする円錐形の渦巻を描画するメソッド
+     *
+     * @param origin:   描画するLocation
+     * @param particle: パーティクルの種類
+     * @param radius:   渦巻の真ん中の半径
+     * @param points:   図形を成す点の数
+     * @param rotX:     X軸回りに回転する角度
+     * @param rotY:     Y軸回りに回転する角度
+     * @param rotZ:     Z軸回りに回転する角度
+     */
+    public void drawAnimConicSpiral(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
+        new BukkitRunnable() {
+
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i < points) {
+                    double t = i * 8 * Math.PI / points;
+                    Vector point = new Vector(radius * t * Math.sin(t), radius * t, radius * t * Math.cos(t));
+                    rotX(point, rotX);
+                    rotY(point, rotY);
+                    rotZ(point, rotZ);
+                    origin.add(point);
+                    origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
+                    origin.subtract(point);
+                } else {
+                    this.cancel();
+                }
+
+                i++;
+            }
+        }.runTaskTimer(plugin, 0, 1);
     }
 
     /**
@@ -276,6 +312,7 @@ public class Drawing {
      * 数式は以下の通り
      * x = Asin(at + δ)
      * y = Bsin(bt)
+     *
      * @param origin:   描画するLocation
      * @param particle: パーティクルの種類
      * @param A:        パラメータA
@@ -317,7 +354,7 @@ public class Drawing {
      * @param rotZ:     Z軸回りに回転する角度
      */
     public void drawLimason(Location origin, Particle particle, double size, int points, double rotX, double rotY, double rotZ) {
-        for (int i=0; i < points; i++) {
+        for (int i = 0; i < points; i++) {
             double t = i * 2 * Math.PI / points;
             Vector point = new Vector(
                     size * (1 + 2 * Math.cos(t)) * Math.cos(t),
@@ -338,17 +375,18 @@ public class Drawing {
      * 数式は以下の通り
      * x = a(t - sin(t))
      * y = a(1 - cos(t))
-     * @param origin:   描画するLocation
-     * @param particle: パーティクルの種類
-     * @param a:        一回転の長さ
+     *
+     * @param origin:        描画するLocation
+     * @param particle:      パーティクルの種類
+     * @param a:             一回転の長さ
      * @param scrollNum:回転回数
-     * @param points:   図形を成す点の数
-     * @param rotX:     X軸回りに回転する角度
-     * @param rotY:     Y軸回りに回転する角度
-     * @param rotZ:     Z軸回りに回転する角度
+     * @param points:        図形を成す点の数
+     * @param rotX:          X軸回りに回転する角度
+     * @param rotY:          Y軸回りに回転する角度
+     * @param rotZ:          Z軸回りに回転する角度
      */
     public void drawCycloid(Location origin, Particle particle, double a, double scrollNum, int points, double rotX, double rotY, double rotZ) {
-        for (int i=0; i < points; i++) {
+        for (int i = 0; i < points; i++) {
             double t = i * scrollNum * 2 * Math.PI / points;
             Vector point = new Vector(
                     a * (t - Math.sin(t)),
