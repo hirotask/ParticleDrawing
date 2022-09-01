@@ -35,15 +35,23 @@ public class DrawCommand {
     }
 
     @Subcommand("spiral")
-    public static void spiral(Player player) {
+    public static void spiral(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
-        drawing.drawSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
+        if(isAnim) {
+            drawing.drawAnimSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
+        } else {
+            drawing.drawSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
+        }
     }
 
     @Subcommand("conicspiral")
-    public static void conicSpiral(Player player) {
+    public static void conicSpiral(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
-        drawing.drawConicSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
+        if(isAnim) {
+
+        } else {
+            drawing.drawConicSpiral(loc, Particle.SPELL_INSTANT, 0.2, 300, 0, 0, 0);
+        }
     }
 
     @Subcommand("cylinderspiral")
