@@ -25,11 +25,10 @@ public class DrawCommand {
 
     @Subcommand("circle")
     public static void circle(Player player, @ABooleanArgument boolean isAnim) {
+        Location loc = player.getLocation();
         if(isAnim) {
-            Location loc = player.getLocation();
             drawing.drawAnimCircle(loc, Particle.SPELL_INSTANT, 3, 50, 0,0,0);
         } else {
-            Location loc = player.getLocation();
             drawing.drawCircle(loc, Particle.SPELL_INSTANT, 3, 50, 0, 0, 0);
         }
 
