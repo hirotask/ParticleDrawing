@@ -31,7 +31,7 @@ public class DrawCommand {
     @Subcommand("animcircle")
     public static void animCircle(Player player) {
         Location loc = player.getLocation();
-        drawing.drawAnimCircle(loc, Particle.SPELL_INSTANT, 3, 50, 0,0,0,false);
+        drawing.drawAnimCircle(loc, Particle.SPELL_INSTANT, 3, 50, 0,0,0);
     }
 
     @Subcommand("spiral")

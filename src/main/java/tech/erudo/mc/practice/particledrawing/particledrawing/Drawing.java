@@ -55,7 +55,7 @@ public class Drawing {
      * @param rotZ:     Z軸回りに回転する角度
      * @param isLoop:   ループするか
      */
-    public void drawAnimCircle(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ, boolean isLoop) {
+    public void drawAnimCircle(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
         new BukkitRunnable() {
 
             int i = 0;
