@@ -6,9 +6,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * パーティクルで様々な形を作り描画してくれるクラス
  */
