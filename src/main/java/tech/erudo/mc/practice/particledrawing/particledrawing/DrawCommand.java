@@ -55,45 +55,79 @@ public class DrawCommand {
     }
 
     @Subcommand("cylinderspiral")
-    public static void cylinderspiral(Player player) {
+    public static void cylinderspiral(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
-        drawing.drawCylinderSpiral(loc, Particle.SPELL_INSTANT, 2, 300, 0, 0, 0);
+        if(isAnim) {
+            drawing.drawAnimCyliderSpiral(loc, Particle.NOTE, 2, 300, 0, 0, 0);
+        } else {
+            drawing.drawCylinderSpiral(loc, Particle.SPELL_INSTANT, 2, 300, 0, 0, 0);
+
+        }
     }
 
     @Subcommand("spiralsphere")
-    public static void spiralSphere(Player player) {
+    public static void spiralSphere(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
-        drawing.drawSpiralSphere(loc, Particle.SPELL_INSTANT, 2, 400, 0, 0, 0);
+        if(isAnim) {
+            drawing.drawAnimSpiralSphere(loc, Particle.NOTE, 2, 400, 0, 0, 0);
+        } else {
+            drawing.drawSpiralSphere(loc, Particle.SPELL_INSTANT, 2, 400, 0, 0, 0);
+
+        }
     }
 
     @Subcommand("asteroid")
-    public static void asteroid(Player player) {
+    public static void asteroid(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
-        drawing.drawAsteroid(loc, Particle.SPELL_INSTANT, 2, 100, 0, 0, 0);
+        if(isAnim) {
+            drawing.drawAnimAsteroid(loc, Particle.NOTE, 2, 100, 0, 0, 0);
+        } else {
+            drawing.drawAsteroid(loc, Particle.SPELL_INSTANT, 2, 100, 0, 0, 0);
+
+        }
     }
 
     @Subcommand("heart")
-    public static void heart(Player player) {
+    public static void heart(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
-        drawing.drawHeart(loc, Particle.SPELL_INSTANT, 1, 100, 0, 0, 0);
+        if(isAnim) {
+            drawing.drawAnimHeart(loc, Particle.NOTE, 1, 100, 0, 0, 0);
+        } else {
+            drawing.drawHeart(loc, Particle.SPELL_INSTANT, 1, 100, 0, 0, 0);
+        }
     }
 
     @Subcommand("lissajous")
-    public static void lissajous(Player player) {
+    public static void lissajous(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
-        drawing.drawLissajous(loc, Particle.SPELL_INSTANT, 2,3,2,1,Math.PI / 6,100,0,0,0);
+        if(isAnim) {
+            drawing.drawAnimLissajous(loc, Particle.NOTE, 2,3,2,1,Math.PI / 6,100,0,0,0);
+        } else {
+            drawing.drawLissajous(loc, Particle.SPELL_INSTANT, 2,3,2,1,Math.PI / 6,100,0,0,0);
+
+        }
     }
 
     @Subcommand("limason")
-    public static void limason(Player player) {
+    public static void limason(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
-        drawing.drawLimason(loc, Particle.SPELL_INSTANT, 1, 100, 0,0,0);
+        if(isAnim) {
+            drawing.drawAnimLimason(loc, Particle.NOTE, 1, 100, 0,0,0);
+        } else {
+            drawing.drawLimason(loc, Particle.SPELL_INSTANT, 1, 100, 0,0,0);
+
+        }
     }
 
     @Subcommand("cycloid")
-    public static void cycloid(Player player) {
+    public static void cycloid(Player player, @ABooleanArgument boolean isAnim) {
         Location loc = player.getLocation();
-        drawing.drawCycloid(loc, Particle.SPELL_INSTANT, 1, 3, 100,0,0,0);
+        if(isAnim) {
+            drawing.drawAnimCycloid(loc, Particle.NOTE, 1, 3, 100,0,0,0);
+        } else {
+            drawing.drawCycloid(loc, Particle.SPELL_INSTANT, 1, 3, 100,0,0,0);
+
+        }
     }
 
 }

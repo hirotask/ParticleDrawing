@@ -233,6 +233,42 @@ public class Drawing {
     }
 
     /**
+     * 指定したパーティクルでアニメーションする円柱形の渦巻を描画するメソッド
+     *
+     * @param origin:   描画するLocation
+     * @param particle: パーティクルの種類
+     * @param radius:   渦巻の真ん中の半径
+     * @param points:   図形を成す点の数
+     * @param rotX:     X軸回りに回転する角度
+     * @param rotY:     Y軸回りに回転する角度
+     * @param rotZ:     Z軸回りに回転する角度
+     */
+    public void drawAnimCyliderSpiral(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
+        new BukkitRunnable() {
+
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i < points) {
+                    double t = i * 8 * Math.PI / points;
+                    Vector point = new Vector(radius * Math.sin(t), radius * t, radius * Math.cos(t));
+                    rotX(point, rotX);
+                    rotY(point, rotY);
+                    rotZ(point, rotZ);
+                    origin.add(point);
+                    origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
+                    origin.subtract(point);
+                } else {
+                    this.cancel();
+                }
+
+                i++;
+            }
+        }.runTaskTimer(plugin, 0, 1);
+    }
+
+    /**
      * 指定したパーティクルで渦巻からなる球形を描画するメソッド
      *
      * @param origin:   描画するLocation
@@ -258,6 +294,46 @@ public class Drawing {
             origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
             origin.subtract(point);
         }
+    }
+
+    /**
+     * 指定したパーティクルでアニメーションする渦巻からなる球形を描画するメソッド
+     *
+     * @param origin:   描画するLocation
+     * @param particle: パーティクルの種類
+     * @param radius:   球の半径
+     * @param points:   図形を成す点の数
+     * @param rotX:     X軸回りに回転する角度
+     * @param rotY:     Y軸回りに回転する角度
+     * @param rotZ:     Z軸回りに回転する角度
+     */
+    public void drawAnimSpiralSphere(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
+        new BukkitRunnable() {
+
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i < points) {
+                    double t = i * 8 * Math.PI / points;
+                    Vector point = new Vector(
+                            radius * Math.sin(t / 10 * Math.PI),
+                            radius * Math.sin((t % 10) * Math.PI) * Math.cos(t / 10 * Math.PI),
+                            radius * Math.cos((t % 10) * Math.PI) * Math.cos(t / 10 * Math.PI)
+                    );
+                    rotX(point, rotX);
+                    rotY(point, rotY);
+                    rotZ(point, rotZ);
+                    origin.add(point);
+                    origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
+                    origin.subtract(point);
+                } else {
+                    this.cancel();
+                }
+
+                i++;
+            }
+        }.runTaskTimer(plugin, 0, 1);
     }
 
     /**
@@ -289,6 +365,46 @@ public class Drawing {
     }
 
     /**
+     * 指定したパーティクルでアニメーションするアステロイドを描画するメソッド
+     *
+     * @param origin:   描画するLocation
+     * @param particle: パーティクルの種類
+     * @param radius:   アステロイドの半径
+     * @param points:   図形を成す点の数
+     * @param rotX:     X軸回りに回転する角度
+     * @param rotY:     Y軸回りに回転する角度
+     * @param rotZ:     Z軸回りに回転する角度
+     */
+    public void drawAnimAsteroid(Location origin, Particle particle, double radius, int points, double rotX, double rotY, double rotZ) {
+        new BukkitRunnable() {
+
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i < points) {
+                    double t = i * 8 * Math.PI / points;
+                    Vector point = new Vector(
+                            radius * Math.pow(Math.cos(t), 3),
+                            0,
+                            radius * Math.pow(Math.sin(t), 3)
+                    );
+                    rotX(point, rotX);
+                    rotY(point, rotY);
+                    rotZ(point, rotZ);
+                    origin.add(point);
+                    origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
+                    origin.subtract(point);
+                } else {
+                    this.cancel();
+                }
+
+                i++;
+            }
+        }.runTaskTimer(plugin, 0, 1);
+    }
+
+    /**
      * 指定したパーティクルでハートを描画するメソッド
      *
      * @param origin:   描画するLocation
@@ -314,6 +430,46 @@ public class Drawing {
             origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
             origin.subtract(point);
         }
+    }
+
+    /**
+     * 指定したパーティクルでアニメーションするハートを描画するメソッド
+     *
+     * @param origin:   描画するLocation
+     * @param particle: パーティクルの種類
+     * @param size:     大きさ（１がデフォルト）
+     * @param points:   図形を成す点の数
+     * @param rotX:     X軸回りに回転する角度
+     * @param rotY:     Y軸回りに回転する角度
+     * @param rotZ:     Z軸回りに回転する角度
+     */
+    public void drawAnimHeart(Location origin, Particle particle, double size, int points, double rotX, double rotY, double rotZ) {
+        new BukkitRunnable() {
+
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i < points) {
+                    double t = i * 2 * Math.PI / points;
+                    Vector point = new Vector(
+                            size * (16 * Math.pow(Math.sin(t), 3)) / 3,
+                            0,
+                            size * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) / 3
+                    );
+                    rotX(point, rotX);
+                    rotY(point, rotY);
+                    rotZ(point, rotZ);
+                    origin.add(point);
+                    origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
+                    origin.subtract(point);
+                } else {
+                    this.cancel();
+                }
+
+                i++;
+            }
+        }.runTaskTimer(plugin, 0, 1);
     }
 
     /**
@@ -352,6 +508,53 @@ public class Drawing {
     }
 
     /**
+     * 指定したパーティクルでアニメーションするリサージュ曲線を描画するメソッド
+     * 数式は以下の通り
+     * x = Asin(at + δ)
+     * y = Bsin(bt)
+     *
+     * @param origin:   描画するLocation
+     * @param particle: パーティクルの種類
+     * @param A:        パラメータA
+     * @param B:        パラメータB
+     * @param a:        パラメータa
+     * @param b:        パラメータb
+     * @param delta:    パラメータδ
+     * @param points:   図形を表す点の数
+     * @param rotX:     X軸回りに回転する角度
+     * @param rotY:     Y軸回りに回転する角度
+     * @param rotZ:     Z軸回りに回転する角度
+     */
+    public void drawAnimLissajous(Location origin, Particle particle, double A, double B, double a, double b, double delta, int points, double rotX, double rotY, double rotZ) {
+        new BukkitRunnable() {
+
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i < points) {
+                    double t = i * 2 * Math.PI / points;
+                    Vector point = new Vector(
+                            A * Math.sin(a * t + delta),
+                            0,
+                            B * Math.sin(b * t)
+                    );
+                    rotX(point, rotX);
+                    rotY(point, rotY);
+                    rotZ(point, rotZ);
+                    origin.add(point);
+                    origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
+                    origin.subtract(point);
+                } else {
+                    this.cancel();
+                }
+
+                i++;
+            }
+        }.runTaskTimer(plugin, 0, 1);
+    }
+
+    /**
      * 指定したパーティクルでリマソン曲線を描画するメソッド
      *
      * @param origin:   描画するLocation
@@ -380,15 +583,52 @@ public class Drawing {
     }
 
     /**
-     * 指定したパーティクルでリサージュ曲線を描画するメソッド
-     * 数式は以下の通り
-     * x = a(t - sin(t))
-     * y = a(1 - cos(t))
+     * 指定したパーティクルでアニメーションするリマソン曲線を描画するメソッド
+     *
+     * @param origin:   描画するLocation
+     * @param particle: パーティクルの種類
+     * @param size:     大きさ（１がデフォルト）
+     * @param points:   図形を成す点の数
+     * @param rotX:     X軸回りに回転する角度
+     * @param rotY:     Y軸回りに回転する角度
+     * @param rotZ:     Z軸回りに回転する角度
+     */
+    public void drawAnimLimason(Location origin, Particle particle, double size, int points, double rotX, double rotY, double rotZ) {
+        new BukkitRunnable() {
+
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i < points) {
+                    double t = i * 2 * Math.PI / points;
+                    Vector point = new Vector(
+                            size * (1 + 2 * Math.cos(t)) * Math.cos(t),
+                            0,
+                            size * (1 + 2 * Math.cos(t)) * Math.sin(t)
+                    );
+                    rotX(point, rotX);
+                    rotY(point, rotY);
+                    rotZ(point, rotZ);
+                    origin.add(point);
+                    origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
+                    origin.subtract(point);
+                } else {
+                    this.cancel();
+                }
+
+                i++;
+            }
+        }.runTaskTimer(plugin, 0, 1);
+    }
+
+    /**
+     * 指定したパーティクルでサイクロイドを描画するメソッド
      *
      * @param origin:        描画するLocation
      * @param particle:      パーティクルの種類
      * @param a:             一回転の長さ
-     * @param scrollNum:回転回数
+     * @param scrollNum:     回転回数
      * @param points:        図形を成す点の数
      * @param rotX:          X軸回りに回転する角度
      * @param rotY:          Y軸回りに回転する角度
@@ -409,6 +649,47 @@ public class Drawing {
             origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
             origin.subtract(point);
         }
+    }
+
+    /**
+     * 指定したパーティクルでサイクロイドを描画するメソッド
+     *
+     * @param origin:        描画するLocation
+     * @param particle:      パーティクルの種類
+     * @param a:             一回転の長さ
+     * @param scrollNum:     回転回数
+     * @param points:        図形を成す点の数
+     * @param rotX:          X軸回りに回転する角度
+     * @param rotY:          Y軸回りに回転する角度
+     * @param rotZ:          Z軸回りに回転する角度
+     */
+    public void drawAnimCycloid(Location origin, Particle particle, double a, double scrollNum, int points, double rotX, double rotY, double rotZ) {
+        new BukkitRunnable() {
+
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i < points) {
+                    double t = i * scrollNum * 2 * Math.PI / points;
+                    Vector point = new Vector(
+                            a * (t - Math.sin(t)),
+                            0,
+                            a * (1 - Math.cos(t))
+                    );
+                    rotX(point, rotX);
+                    rotY(point, rotY);
+                    rotZ(point, rotZ);
+                    origin.add(point);
+                    origin.getWorld().spawnParticle(particle, origin, 1, 0, 0, 0);
+                    origin.subtract(point);
+                } else {
+                    this.cancel();
+                }
+
+                i++;
+            }
+        }.runTaskTimer(plugin, 0, 1);
     }
 
 
