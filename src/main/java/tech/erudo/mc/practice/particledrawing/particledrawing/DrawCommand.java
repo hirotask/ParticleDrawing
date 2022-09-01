@@ -3,6 +3,7 @@ package tech.erudo.mc.practice.particledrawing.particledrawing;
 import dev.jorel.commandapi.annotations.Command;
 import dev.jorel.commandapi.annotations.Default;
 import dev.jorel.commandapi.annotations.Subcommand;
+import dev.jorel.commandapi.annotations.arguments.ABooleanArgument;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.command.CommandSender;
@@ -23,15 +24,15 @@ public class DrawCommand {
     }
 
     @Subcommand("circle")
-    public static void circle(Player player) {
-        Location loc = player.getLocation();
-        drawing.drawCircle(loc, Particle.SPELL_INSTANT, 3, 50, Math.PI / 2, 0, 0);
-    }
+    public static void circle(Player player, @ABooleanArgument boolean isAnim) {
+        if(isAnim) {
+            Location loc = player.getLocation();
+            drawing.drawAnimCircle(loc, Particle.SPELL_INSTANT, 3, 50, 0,0,0);
+        } else {
+            Location loc = player.getLocation();
+            drawing.drawCircle(loc, Particle.SPELL_INSTANT, 3, 50, 0, 0, 0);
+        }
 
-    @Subcommand("animcircle")
-    public static void animCircle(Player player) {
-        Location loc = player.getLocation();
-        drawing.drawAnimCircle(loc, Particle.SPELL_INSTANT, 3, 50, 0,0,0);
     }
 
     @Subcommand("spiral")
