@@ -7,10 +7,13 @@ public final class ParticleDrawing extends JavaPlugin {
 
     private static ParticleDrawing INSTANCE;
 
+    public static DrawingModel model = DrawingModel.CIRCLE;
+
     @Override
     public void onEnable() {
         INSTANCE = this;
         CommandAPI.registerCommand(DrawCommand.class);
+        new EventListener(this);
     }
 
     @Override
@@ -21,4 +24,6 @@ public final class ParticleDrawing extends JavaPlugin {
     public static ParticleDrawing getInstance() {
         return INSTANCE;
     }
+
+
 }

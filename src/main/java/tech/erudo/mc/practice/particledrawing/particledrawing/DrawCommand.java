@@ -4,6 +4,7 @@ import dev.jorel.commandapi.annotations.Command;
 import dev.jorel.commandapi.annotations.Default;
 import dev.jorel.commandapi.annotations.Subcommand;
 import dev.jorel.commandapi.annotations.arguments.ABooleanArgument;
+import dev.jorel.commandapi.annotations.arguments.AMultiLiteralArgument;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.command.CommandSender;
@@ -21,6 +22,23 @@ public class DrawCommand {
     @Default
     public static void draw(CommandSender sender) {
         sender.sendMessage(helpMsgs);
+    }
+
+    @Subcommand("model")
+    public static void model(Player player, @AMultiLiteralArgument({
+            "CIRCLE",
+            "SPIRAL",
+            "CONICSPIRAL",
+            "CYLINDERSPIRAL",
+            "SPIRALSPHERE",
+            "ASTEROID",
+            "HEART",
+            "LISSAJOUS",
+            "LIMASON",
+            "CYCLOID"
+    }) String modelName) {
+        ParticleDrawing.model = DrawingModel.valueOf(modelName);
+        player.sendMessage("Modelを" + modelName + "に変更");
     }
 
     @Subcommand("circle")
