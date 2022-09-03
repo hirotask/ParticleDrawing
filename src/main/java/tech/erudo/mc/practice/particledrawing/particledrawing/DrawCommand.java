@@ -38,7 +38,7 @@ public class DrawCommand {
             "CYCLOID"
     }) String modelName) {
         ParticleDrawing.model = DrawingModel.valueOf(modelName);
-        player.sendMessage("Modelを" + modelName + "に変更");
+        player.sendMessage("描画する図形を" + modelName + "に変更");
     }
 
     @Subcommand("circle")
