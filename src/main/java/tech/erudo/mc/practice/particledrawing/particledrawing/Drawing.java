@@ -161,7 +161,7 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawConicSpiral(Location origin, Particle particle,T data, double radius, int points, double rotX, double rotY, double rotZ) {
+    public <T> void drawConicSpiral(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
         for (int i = 0; i < points; i++) {
             double t = i * 8 * Math.PI / points;
             Vector point = new Vector(radius * t * Math.sin(t), radius * t, radius * t * Math.cos(t));
@@ -248,7 +248,7 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawAnimCyliderSpiral(Location origin, Particle particle,T data, double radius, int points, double rotX, double rotY, double rotZ) {
+    public <T> void drawAnimCyliderSpiral(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
         new BukkitRunnable() {
 
             int i = 0;
@@ -707,6 +707,39 @@ public class Drawing {
                 i++;
             }
         }.runTaskTimer(plugin, 0, 1);
+    }
+
+    public <T> void drawStar(
+            Location origin,
+            Particle particle,
+            T data,
+            double a,
+            double b,
+            double c,
+            double r0,
+            int n,
+            int points,
+            double rotX,
+            double rotY,
+            double rotZ
+    ) {
+        double xmax = Math.sqrt(-(1 / Math.pow(b, 2)) * Math.log(2 * Math.pow(Math.E, -Math.pow(a, 2)) - 1));
+        for (int i = 0; i < points; i++) {
+            double t = i * 2 * Math.PI / points;
+            double r = r0 + 1 / c * Math.sqrt(-Math.log(2 * Math.pow(Math.E, -Math.pow(a, 2)) - Math.pow(Math.E, -Math.pow(b, 2) * Math.pow(xmax, 2) * Math.pow(Math.sin((t - Math.PI / 2) * n / 2), 2))));
+            Vector point = new Vector(
+                    r * Math.cos(t),
+                    0,
+                    r * Math.sin(t)
+            );
+            rotX(point, rotX);
+            rotY(point, rotY);
+            rotZ(point, rotZ);
+            origin.add(point);
+            origin.getWorld().spawnParticle(particle, origin, 1, data);
+            origin.subtract(point);
+        }
+
     }
 
 

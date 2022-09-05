@@ -148,4 +148,13 @@ public class DrawCommand {
         }
     }
 
+    @Subcommand("star")
+    public static void star(Player player) {
+        Location loc = player.getLocation();
+        double a = 0.81;
+        double b = 0.14;
+        double xmax = Math.sqrt(-(1 / Math.pow(b, 2)) * Math.log(2 * Math.pow(Math.E, -Math.pow(a, 2)) - 1));
+        drawing.drawStar(loc, Particle.SPELL_INSTANT, null, 0.81, 0.14, 1, 0.1 * xmax, 5, 100, 0,0,0);
+    }
+
 }
