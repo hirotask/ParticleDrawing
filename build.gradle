@@ -78,4 +78,22 @@ publishing {
             }
         }
     }
+
+    publications {
+        maven(MavenPublication) {
+            artifactId 'particle-drawing'
+            version 'v1.0-SNAPSHOT'  // バージョンを指定したい場合
+
+            pom {
+                url = 'https://github.com/hirotask/ParticleDrawing'
+                licenses {
+                    license {
+                        name = 'MIT'
+                    }
+                }
+            }
+
+            from components.java
+        }
+    }
 }
