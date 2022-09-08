@@ -7,7 +7,6 @@ import dev.jorel.commandapi.annotations.arguments.ABooleanArgument;
 import dev.jorel.commandapi.annotations.arguments.AMultiLiteralArgument;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @Command("draw")
@@ -20,9 +19,21 @@ public class DrawCommand {
     private static final Drawing drawing = new Drawing(ParticleDrawing.getInstance());
 
     @Default
-    public static void draw(CommandSender sender) {
-        sender.sendMessage(helpMsgs);
+    public static void draw(Player player) {
+        if(ParticleDrawing.eventPlayer.contains(player)) {
+            player.sendMessage("パーティクルが出なくなりました");
+            ParticleDrawing.eventPlayer.remove(player);
+        } else {
+            player.sendMessage("パーティクルが出るようになりました");
+            ParticleDrawing.eventPlayer.add(player);
+        }
     }
+
+    @Subcommand("help")
+    public static void help(Player player) {
+        player.sendMessage(helpMsgs);
+    }
+
 
     @Subcommand("model")
     public static void model(Player player, @AMultiLiteralArgument({

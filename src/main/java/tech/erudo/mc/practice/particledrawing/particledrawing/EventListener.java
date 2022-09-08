@@ -24,6 +24,11 @@ public class EventListener implements Listener {
         if(e.getAction() == Action.RIGHT_CLICK_AIR ||
         e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player player = e.getPlayer();
+
+            if(!ParticleDrawing.eventPlayer.contains(player)) {
+                return;
+            }
+
             Location loc = player.getLocation();
 
             float yaw = player.getLocation().getYaw();
