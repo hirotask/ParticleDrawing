@@ -4,13 +4,11 @@ This is Minecraft plugin which can draw complex curves with particles.
 
 ## For developers
 
-### Add Dependencies
-
-#### Maven
+### Maven
 
 1. Add Repository
 
-#### Gradle
+### Gradle
 
 1. Add Repository
 
