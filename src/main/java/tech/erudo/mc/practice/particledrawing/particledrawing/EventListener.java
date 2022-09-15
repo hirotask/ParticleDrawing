@@ -50,9 +50,6 @@ public class EventListener implements Listener {
                 default -> drawing.drawSpiralSphere(loc, Particle.COMPOSTER, null,2, 400, 0, 0, 0);
 
             }
-
-
-
         }
     }
 }
