@@ -16,16 +16,16 @@ public class DrawCommand {
             "Helpです"
     };
 
-    private static final Drawing drawing = new Drawing(ParticleDrawing.getInstance());
+    private static final Drawing drawing = new Drawing(ParticleDrawing.Companion.getInstance$ParticleDrawing());
 
     @Default
     public static void draw(Player player) {
-        if(ParticleDrawing.eventPlayer.contains(player)) {
+        if(ParticleDrawing.Companion.getEventPlayer().contains(player)) {
             player.sendMessage("パーティクルが出なくなりました");
-            ParticleDrawing.eventPlayer.remove(player);
+            ParticleDrawing.Companion.getEventPlayer().remove(player);
         } else {
             player.sendMessage("パーティクルが出るようになりました");
-            ParticleDrawing.eventPlayer.add(player);
+            ParticleDrawing.Companion.getEventPlayer().add(player);
         }
     }
 
@@ -48,7 +48,7 @@ public class DrawCommand {
             "LIMASON",
             "CYCLOID"
     }) String modelName) {
-        ParticleDrawing.model = DrawingModel.valueOf(modelName);
+        ParticleDrawing.Companion.setModel(DrawingModel.valueOf(modelName));
         player.sendMessage("描画する図形を" + modelName + "に変更");
     }
 
