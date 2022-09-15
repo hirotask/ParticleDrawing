@@ -17,7 +17,7 @@ maven {
     name = "GitHubPackages"
     url = uri("https://maven.pkg.github.com/hirotask/ParticleDrawing")
     credentials {
-        username = USERNAME // GitHubのユーザ名
+        username = hirotask // GitHubのユーザ名
         password = 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
     }
 }
