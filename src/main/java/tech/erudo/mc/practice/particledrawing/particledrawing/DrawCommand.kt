@@ -1,42 +1,45 @@
-package tech.erudo.mc.practice.particledrawing.particledrawing;
+package tech.erudo.mc.practice.particledrawing.particledrawing
 
-import dev.jorel.commandapi.annotations.Command;
-import dev.jorel.commandapi.annotations.Default;
-import dev.jorel.commandapi.annotations.Subcommand;
-import dev.jorel.commandapi.annotations.arguments.ABooleanArgument;
-import dev.jorel.commandapi.annotations.arguments.AMultiLiteralArgument;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.entity.Player;
+import dev.jorel.commandapi.annotations.Command
+import dev.jorel.commandapi.annotations.Default
+import dev.jorel.commandapi.annotations.Subcommand
+import dev.jorel.commandapi.annotations.arguments.ABooleanArgument
+import dev.jorel.commandapi.annotations.arguments.AMultiLiteralArgument
+import org.bukkit.Particle
+import org.bukkit.entity.Player
+import tech.erudo.mc.practice.particledrawing.particledrawing.ParticleDrawing.Companion.eventPlayer
+import tech.erudo.mc.practice.particledrawing.particledrawing.ParticleDrawing.Companion.instance
+import tech.erudo.mc.practice.particledrawing.particledrawing.ParticleDrawing.Companion.model
 
 @Command("draw")
-public class DrawCommand {
-
-    private static final String[] helpMsgs = {
-            "Helpです"
-    };
-
-    private static final Drawing drawing = new Drawing(ParticleDrawing.Companion.getInstance$ParticleDrawing());
-
+object DrawCommand {
+    private val helpMsgs = arrayOf(
+        "Helpです"
+    )
+    private val drawing = Drawing(instance)
+    @JvmStatic
     @Default
-    public static void draw(Player player) {
-        if(ParticleDrawing.Companion.getEventPlayer().contains(player)) {
-            player.sendMessage("パーティクルが出なくなりました");
-            ParticleDrawing.Companion.getEventPlayer().remove(player);
+    fun draw(player: Player) {
+        if (eventPlayer.contains(player)) {
+            player.sendMessage("パーティクルが出なくなりました")
+            eventPlayer.minus(player)
         } else {
-            player.sendMessage("パーティクルが出るようになりました");
-            ParticleDrawing.Companion.getEventPlayer().add(player);
+            player.sendMessage("パーティクルが出るようになりました")
+            eventPlayer.plus(player)
         }
     }
 
+    @JvmStatic
     @Subcommand("help")
-    public static void help(Player player) {
-        player.sendMessage(helpMsgs);
+    fun help(player: Player) {
+        player.sendMessage(*helpMsgs)
     }
 
-
+    @JvmStatic
     @Subcommand("model")
-    public static void model(Player player, @AMultiLiteralArgument({
+    fun model(
+        player: Player,
+        @AMultiLiteralArgument(
             "CIRCLE",
             "SPIRAL",
             "CONICSPIRAL",
@@ -47,125 +50,155 @@ public class DrawCommand {
             "LISSAJOUS",
             "LIMASON",
             "CYCLOID"
-    }) String modelName) {
-        ParticleDrawing.Companion.setModel(DrawingModel.valueOf(modelName));
-        player.sendMessage("描画する図形を" + modelName + "に変更");
+        ) modelName: String
+    ) {
+        model = DrawingModel.valueOf(modelName)
+        player.sendMessage("描画する図形を" + modelName + "に変更")
     }
 
+    @JvmStatic
     @Subcommand("circle")
-    public static void circle(Player player, @ABooleanArgument boolean isAnim) {
-        Location loc = player.getLocation();
-        if(isAnim) {
-            drawing.drawAnimCircle(loc, Particle.NOTE, null,3, 50, 0,0,0);
+    fun circle(player: Player, @ABooleanArgument isAnim: Boolean) {
+        val loc = player.location
+        if (isAnim) {
+            drawing.drawAnimCircle<Any?>(loc, Particle.NOTE, null, 3.0, 50, 0.0, 0.0, 0.0)
         } else {
-            drawing.drawCircle(loc, Particle.SPELL_INSTANT,null, 3, 50, 0, 0, 0);
+            drawing.drawCircle<Any?>(loc, Particle.SPELL_INSTANT, null, 3.0, 50, 0.0, 0.0, 0.0)
         }
-
     }
 
+    @JvmStatic
     @Subcommand("spiral")
-    public static void spiral(Player player, @ABooleanArgument boolean isAnim) {
-        Location loc = player.getLocation();
-        if(isAnim) {
-            drawing.drawAnimSpiral(loc, Particle.NOTE, null,0.2, 300, 0, 0, 0);
+    fun spiral(player: Player, @ABooleanArgument isAnim: Boolean) {
+        val loc = player.location
+        if (isAnim) {
+            drawing.drawAnimSpiral<Any?>(loc, Particle.NOTE, null, 0.2, 300, 0.0, 0.0, 0.0)
         } else {
-            drawing.drawSpiral(loc, Particle.SPELL_INSTANT, null,0.2, 300, 0, 0, 0);
+            drawing.drawSpiral<Any?>(loc, Particle.SPELL_INSTANT, null, 0.2, 300, 0.0, 0.0, 0.0)
         }
     }
 
+    @JvmStatic
     @Subcommand("conicspiral")
-    public static void conicSpiral(Player player, @ABooleanArgument boolean isAnim) {
-        Location loc = player.getLocation();
-        if(isAnim) {
-            drawing.drawAnimConicSpiral(loc, Particle.NOTE, null,0.2, 300, 0, 0, 0);
+    fun conicSpiral(player: Player, @ABooleanArgument isAnim: Boolean) {
+        val loc = player.location
+        if (isAnim) {
+            drawing.drawAnimConicSpiral<Any?>(loc, Particle.NOTE, null, 0.2, 300, 0.0, 0.0, 0.0)
         } else {
-            drawing.drawConicSpiral(loc, Particle.SPELL_INSTANT, null,0.2, 300, 0, 0, 0);
+            drawing.drawConicSpiral<Any?>(loc, Particle.SPELL_INSTANT, null, 0.2, 300, 0.0, 0.0, 0.0)
         }
     }
 
+    @JvmStatic
     @Subcommand("cylinderspiral")
-    public static void cylinderspiral(Player player, @ABooleanArgument boolean isAnim) {
-        Location loc = player.getLocation();
-        if(isAnim) {
-            drawing.drawAnimCyliderSpiral(loc, Particle.NOTE, null,2, 300, 0, 0, 0);
+    fun cylinderspiral(player: Player, @ABooleanArgument isAnim: Boolean) {
+        val loc = player.location
+        if (isAnim) {
+            drawing.drawAnimCyliderSpiral<Any?>(loc, Particle.NOTE, null, 2.0, 300, 0.0, 0.0, 0.0)
         } else {
-            drawing.drawCylinderSpiral(loc, Particle.SPELL_INSTANT, null,2, 300, 0, 0, 0);
-
+            drawing.drawCylinderSpiral<Any?>(loc, Particle.SPELL_INSTANT, null, 2.0, 300, 0.0, 0.0, 0.0)
         }
     }
 
+    @JvmStatic
     @Subcommand("spiralsphere")
-    public static void spiralSphere(Player player, @ABooleanArgument boolean isAnim) {
-        Location loc = player.getLocation();
-        if(isAnim) {
-            drawing.drawAnimSpiralSphere(loc, Particle.NOTE, null,2, 400, 0, 0, 0);
+    fun spiralSphere(player: Player, @ABooleanArgument isAnim: Boolean) {
+        val loc = player.location
+        if (isAnim) {
+            drawing.drawAnimSpiralSphere<Any?>(loc, Particle.NOTE, null, 2.0, 400, 0.0, 0.0, 0.0)
         } else {
-            drawing.drawSpiralSphere(loc, Particle.SPELL_INSTANT, null,2, 400, 0, 0, 0);
-
+            drawing.drawSpiralSphere<Any?>(loc, Particle.SPELL_INSTANT, null, 2.0, 400, 0.0, 0.0, 0.0)
         }
     }
 
+    @JvmStatic
     @Subcommand("asteroid")
-    public static void asteroid(Player player, @ABooleanArgument boolean isAnim) {
-        Location loc = player.getLocation();
-        if(isAnim) {
-            drawing.drawAnimAsteroid(loc, Particle.NOTE, null,2, 100, 0, 0, 0);
+    fun asteroid(player: Player, @ABooleanArgument isAnim: Boolean) {
+        val loc = player.location
+        if (isAnim) {
+            drawing.drawAnimAsteroid<Any?>(loc, Particle.NOTE, null, 2.0, 100, 0.0, 0.0, 0.0)
         } else {
-            drawing.drawAsteroid(loc, Particle.SPELL_INSTANT, null,2, 100, 0, 0, 0);
-
+            drawing.drawAsteroid<Any?>(loc, Particle.SPELL_INSTANT, null, 2.0, 100, 0.0, 0.0, 0.0)
         }
     }
 
+    @JvmStatic
     @Subcommand("heart")
-    public static void heart(Player player, @ABooleanArgument boolean isAnim) {
-        Location loc = player.getLocation();
-        if(isAnim) {
-            drawing.drawAnimHeart(loc, Particle.NOTE, null,1, 100, 0, 0, 0);
+    fun heart(player: Player, @ABooleanArgument isAnim: Boolean) {
+        val loc = player.location
+        if (isAnim) {
+            drawing.drawAnimHeart<Any?>(loc, Particle.NOTE, null, 1.0, 100, 0.0, 0.0, 0.0)
         } else {
-            drawing.drawHeart(loc, Particle.SPELL_INSTANT, null,1, 100, 0, 0, 0);
+            drawing.drawHeart<Any?>(loc, Particle.SPELL_INSTANT, null, 1.0, 100, 0.0, 0.0, 0.0)
         }
     }
 
+    @JvmStatic
     @Subcommand("lissajous")
-    public static void lissajous(Player player, @ABooleanArgument boolean isAnim) {
-        Location loc = player.getLocation();
-        if(isAnim) {
-            drawing.drawAnimLissajous(loc, Particle.NOTE, null,2,3,2,1,Math.PI / 6,100,0,0,0);
+    fun lissajous(player: Player, @ABooleanArgument isAnim: Boolean) {
+        val loc = player.location
+        if (isAnim) {
+            drawing.drawAnimLissajous<Any?>(
+                loc,
+                Particle.NOTE,
+                null,
+                2.0,
+                3.0,
+                2.0,
+                1.0,
+                Math.PI / 6,
+                100,
+                0.0,
+                0.0,
+                0.0
+            )
         } else {
-            drawing.drawLissajous(loc, Particle.SPELL_INSTANT, null,2,3,2,1,Math.PI / 6,100,0,0,0);
-
+            drawing.drawLissajous<Any?>(
+                loc,
+                Particle.SPELL_INSTANT,
+                null,
+                2.0,
+                3.0,
+                2.0,
+                1.0,
+                Math.PI / 6,
+                100,
+                0.0,
+                0.0,
+                0.0
+            )
         }
     }
 
+    @JvmStatic
     @Subcommand("limason")
-    public static void limason(Player player, @ABooleanArgument boolean isAnim) {
-        Location loc = player.getLocation();
-        if(isAnim) {
-            drawing.drawAnimLimason(loc, Particle.NOTE, null,1, 100, 0,0,0);
+    fun limason(player: Player, @ABooleanArgument isAnim: Boolean) {
+        val loc = player.location
+        if (isAnim) {
+            drawing.drawAnimLimason<Any?>(loc, Particle.NOTE, null, 1.0, 100, 0.0, 0.0, 0.0)
         } else {
-            drawing.drawLimason(loc, Particle.SPELL_INSTANT, null,1, 100, 0,0,0);
-
+            drawing.drawLimason<Any?>(loc, Particle.SPELL_INSTANT, null, 1.0, 100, 0.0, 0.0, 0.0)
         }
     }
 
+    @JvmStatic
     @Subcommand("cycloid")
-    public static void cycloid(Player player, @ABooleanArgument boolean isAnim) {
-        Location loc = player.getLocation();
-        if(isAnim) {
-            drawing.drawAnimCycloid(loc, Particle.NOTE, null,1, 3, 100,0,0,0);
+    fun cycloid(player: Player, @ABooleanArgument isAnim: Boolean) {
+        val loc = player.location
+        if (isAnim) {
+            drawing.drawAnimCycloid<Any?>(loc, Particle.NOTE, null, 1.0, 3.0, 100, 0.0, 0.0, 0.0)
         } else {
-            drawing.drawCycloid(loc, Particle.SPELL_INSTANT, null,1, 3, 100,0,0,0);
-
+            drawing.drawCycloid<Any?>(loc, Particle.SPELL_INSTANT, null, 1.0, 3.0, 100, 0.0, 0.0, 0.0)
         }
     }
 
+    @JvmStatic
     @Subcommand("star")
-    public static void star(Player player) {
-        Location loc = player.getLocation();
-        double a = 0.81;
-        double b = 0.14;
-        double xmax = Math.sqrt(-(1 / Math.pow(b, 2)) * Math.log(2 * Math.pow(Math.E, -Math.pow(a, 2)) - 1));
-        drawing.drawStar(loc, Particle.SPELL_INSTANT, null, 0.81, 0.14, 1, 0.1 * xmax, 5, 100, 0,0,0);
+    fun star(player: Player) {
+        val loc = player.location
+        val a = 0.81
+        val b = 0.14
+        val xmax = Math.sqrt(-(1 / Math.pow(b, 2.0)) * Math.log(2 * Math.pow(Math.E, -Math.pow(a, 2.0)) - 1))
+        drawing.drawStar<Any?>(loc, Particle.SPELL_INSTANT, null, 0.81, 0.14, 1.0, 0.1 * xmax, 5, 100, 0.0, 0.0, 0.0)
     }
-
 }
