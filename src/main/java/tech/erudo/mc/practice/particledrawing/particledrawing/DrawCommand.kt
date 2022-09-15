@@ -10,6 +10,7 @@ import org.bukkit.entity.Player
 import tech.erudo.mc.practice.particledrawing.particledrawing.ParticleDrawing.Companion.eventPlayer
 import tech.erudo.mc.practice.particledrawing.particledrawing.ParticleDrawing.Companion.instance
 import tech.erudo.mc.practice.particledrawing.particledrawing.ParticleDrawing.Companion.model
+import kotlin.math.PI
 
 @Command("draw")
 object DrawCommand {
@@ -146,7 +147,7 @@ object DrawCommand {
                 3.0,
                 2.0,
                 1.0,
-                Math.PI / 6,
+                PI / 6,
                 100,
                 0.0,
                 0.0,
@@ -161,7 +162,7 @@ object DrawCommand {
                 3.0,
                 2.0,
                 1.0,
-                Math.PI / 6,
+                PI / 6,
                 100,
                 0.0,
                 0.0,
