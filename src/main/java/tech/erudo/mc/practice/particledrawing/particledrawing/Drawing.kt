@@ -1,23 +1,17 @@
-package tech.erudo.mc.practice.particledrawing.particledrawing;
+package tech.erudo.mc.practice.particledrawing.particledrawing
 
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
+import org.bukkit.Location
+import org.bukkit.Particle
+import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.scheduler.BukkitRunnable
+import org.bukkit.util.Vector
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * パーティクルで様々な形を作り描画してくれるクラス
  */
-public class Drawing {
-
-    private JavaPlugin plugin;
-
-    public Drawing(JavaPlugin plugin) {
-        this.plugin = plugin;
-    }
-
-
+class Drawing(private val plugin: JavaPlugin) {
     /**
      * 指定したパーティクルで円を描画するメソッド
      *
@@ -30,17 +24,26 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawCircle(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-        for (int i = 0; i < points; i++) {
-            double t = i * 2 * Math.PI / points;
-            Vector point = new Vector(radius * Math.cos(t), 0, radius * Math.sin(t));
-            rotX(point, rotX);
-            rotY(point, rotY);
-            rotZ(point, rotZ);
-            origin.add(point);
+    fun <T> drawCircle(
+        origin: Location,
+        particle: Particle? = Particle.SPELL_INSTANT,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        for (i in 0 until points) {
+            val t = i * 2 * Math.PI / points
+            val point = Vector(radius * Math.cos(t), 0.0, radius * Math.sin(t))
+            rotX(point, rotX)
+            rotY(point, rotY)
+            rotZ(point, rotZ)
+            origin.add(point)
             // spawn something at origin
-            origin.getWorld().spawnParticle(particle, origin, 10, data);
-            origin.subtract(point);
+            origin.world.spawnParticle<T>(particle!!, origin, 10, data)
+            origin.subtract(point)
         }
     }
 
@@ -56,32 +59,35 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawAnimCircle(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-
-        new BukkitRunnable() {
-
-            int i = 0;
-
-            @Override
-            public void run() {
+    fun <T> drawAnimCircle(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        object : BukkitRunnable() {
+            var i = 0
+            override fun run() {
                 if (i < points) {
-                    double t = i * 2 * Math.PI / points;
-                    Vector point = new Vector(radius * Math.cos(t), 0, radius * Math.sin(t));
-                    rotX(point, rotX);
-                    rotY(point, rotY);
-                    rotZ(point, rotZ);
-                    origin.add(point);
+                    val t = i * 2 * Math.PI / points
+                    val point = Vector(radius * Math.cos(t), 0.0, radius * Math.sin(t))
+                    rotX(point, rotX)
+                    rotY(point, rotY)
+                    rotZ(point, rotZ)
+                    origin.add(point)
                     // spawn something at origin
-                    origin.getWorld().spawnParticle(particle, origin, 10, data);
-                    origin.subtract(point);
+                    origin.world.spawnParticle<T>(particle!!, origin, 10, data)
+                    origin.subtract(point)
                 } else {
-                    this.cancel();
+                    cancel()
                 }
-                i++;
+                i++
             }
-        }.runTaskTimer(plugin, 0, 1);
-
-
+        }.runTaskTimer(plugin, 0, 1)
     }
 
     /**
@@ -96,16 +102,25 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawSpiral(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-        for (int i = 0; i < points; i++) {
-            double t = i * 8 * Math.PI / points;
-            Vector point = new Vector(radius * t * Math.sin(t), 0, radius * t * Math.cos(t));
-            rotX(point, rotX);
-            rotY(point, rotY);
-            rotZ(point, rotZ);
-            origin.add(point);
-            origin.getWorld().spawnParticle(particle, origin, 1, data);
-            origin.subtract(point);
+    fun <T> drawSpiral(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        for (i in 0 until points) {
+            val t = i * 8 * Math.PI / points
+            val point = Vector(radius * t * Math.sin(t), 0.0, radius * t * Math.cos(t))
+            rotX(point, rotX)
+            rotY(point, rotY)
+            rotZ(point, rotZ)
+            origin.add(point)
+            origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+            origin.subtract(point)
         }
     }
 
@@ -121,32 +136,35 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawAnimSpiral(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-
-        new BukkitRunnable() {
-            int i = 0;
-
-            @Override
-            public void run() {
+    fun <T> drawAnimSpiral(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        object : BukkitRunnable() {
+            var i = 0
+            override fun run() {
                 if (i < points) {
-                    double t = i * 8 * Math.PI / points;
-                    Vector point = new Vector(radius * t * Math.sin(t), 0, radius * t * Math.cos(t));
-                    rotX(point, rotX);
-                    rotY(point, rotY);
-                    rotZ(point, rotZ);
-                    origin.add(point);
+                    val t = i * 8 * Math.PI / points
+                    val point = Vector(radius * t * Math.sin(t), 0.0, radius * t * Math.cos(t))
+                    rotX(point, rotX)
+                    rotY(point, rotY)
+                    rotZ(point, rotZ)
+                    origin.add(point)
                     // spawn something at origin
-                    origin.getWorld().spawnParticle(particle, origin, 1, data);
-                    origin.subtract(point);
+                    origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+                    origin.subtract(point)
                 } else {
-                    this.cancel();
+                    cancel()
                 }
-
-                i++;
+                i++
             }
-        }.runTaskTimer(plugin, 0, 1);
-
-
+        }.runTaskTimer(plugin, 0, 1)
     }
 
     /**
@@ -161,16 +179,25 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawConicSpiral(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-        for (int i = 0; i < points; i++) {
-            double t = i * 8 * Math.PI / points;
-            Vector point = new Vector(radius * t * Math.sin(t), radius * t, radius * t * Math.cos(t));
-            rotX(point, rotX);
-            rotY(point, rotY);
-            rotZ(point, rotZ);
-            origin.add(point);
-            origin.getWorld().spawnParticle(particle, origin, 1, data);
-            origin.subtract(point);
+    fun <T> drawConicSpiral(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        for (i in 0 until points) {
+            val t = i * 8 * Math.PI / points
+            val point = Vector(radius * t * Math.sin(t), radius * t, radius * t * Math.cos(t))
+            rotX(point, rotX)
+            rotY(point, rotY)
+            rotZ(point, rotZ)
+            origin.add(point)
+            origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+            origin.subtract(point)
         }
     }
 
@@ -186,29 +213,34 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawAnimConicSpiral(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-        new BukkitRunnable() {
-
-            int i = 0;
-
-            @Override
-            public void run() {
+    fun <T> drawAnimConicSpiral(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        object : BukkitRunnable() {
+            var i = 0
+            override fun run() {
                 if (i < points) {
-                    double t = i * 8 * Math.PI / points;
-                    Vector point = new Vector(radius * t * Math.sin(t), radius * t, radius * t * Math.cos(t));
-                    rotX(point, rotX);
-                    rotY(point, rotY);
-                    rotZ(point, rotZ);
-                    origin.add(point);
-                    origin.getWorld().spawnParticle(particle, origin, 1, data);
-                    origin.subtract(point);
+                    val t = i * 8 * Math.PI / points
+                    val point = Vector(radius * t * Math.sin(t), radius * t, radius * t * Math.cos(t))
+                    rotX(point, rotX)
+                    rotY(point, rotY)
+                    rotZ(point, rotZ)
+                    origin.add(point)
+                    origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+                    origin.subtract(point)
                 } else {
-                    this.cancel();
+                    cancel()
                 }
-
-                i++;
+                i++
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(plugin, 0, 1)
     }
 
     /**
@@ -223,16 +255,25 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawCylinderSpiral(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-        for (int i = 0; i < points; i++) {
-            double t = i * 8 * Math.PI / points;
-            Vector point = new Vector(radius * Math.sin(t), radius * t, radius * Math.cos(t));
-            rotX(point, rotX);
-            rotY(point, rotY);
-            rotZ(point, rotZ);
-            origin.add(point);
-            origin.getWorld().spawnParticle(particle, origin, 1, data);
-            origin.subtract(point);
+    fun <T> drawCylinderSpiral(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        for (i in 0 until points) {
+            val t = i * 8 * Math.PI / points
+            val point = Vector(radius * Math.sin(t), radius * t, radius * Math.cos(t))
+            rotX(point, rotX)
+            rotY(point, rotY)
+            rotZ(point, rotZ)
+            origin.add(point)
+            origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+            origin.subtract(point)
         }
     }
 
@@ -248,29 +289,34 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawAnimCyliderSpiral(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-        new BukkitRunnable() {
-
-            int i = 0;
-
-            @Override
-            public void run() {
+    fun <T> drawAnimCyliderSpiral(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        object : BukkitRunnable() {
+            var i = 0
+            override fun run() {
                 if (i < points) {
-                    double t = i * 8 * Math.PI / points;
-                    Vector point = new Vector(radius * Math.sin(t), radius * t, radius * Math.cos(t));
-                    rotX(point, rotX);
-                    rotY(point, rotY);
-                    rotZ(point, rotZ);
-                    origin.add(point);
-                    origin.getWorld().spawnParticle(particle, origin, 1, data);
-                    origin.subtract(point);
+                    val t = i * 8 * Math.PI / points
+                    val point = Vector(radius * Math.sin(t), radius * t, radius * Math.cos(t))
+                    rotX(point, rotX)
+                    rotY(point, rotY)
+                    rotZ(point, rotZ)
+                    origin.add(point)
+                    origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+                    origin.subtract(point)
                 } else {
-                    this.cancel();
+                    cancel()
                 }
-
-                i++;
+                i++
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(plugin, 0, 1)
     }
 
     /**
@@ -285,20 +331,29 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawSpiralSphere(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-        for (int i = 0; i < points; i++) {
-            double t = i * 8 * Math.PI / points;
-            Vector point = new Vector(
-                    radius * Math.sin(t / 10 * Math.PI),
-                    radius * Math.sin((t % 10) * Math.PI) * Math.cos(t / 10 * Math.PI),
-                    radius * Math.cos((t % 10) * Math.PI) * Math.cos(t / 10 * Math.PI)
-            );
-            rotX(point, rotX);
-            rotY(point, rotY);
-            rotZ(point, rotZ);
-            origin.add(point);
-            origin.getWorld().spawnParticle(particle, origin, 1, data);
-            origin.subtract(point);
+    fun <T> drawSpiralSphere(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        for (i in 0 until points) {
+            val t = i * 8 * Math.PI / points
+            val point = Vector(
+                radius * Math.sin(t / 10 * Math.PI),
+                radius * Math.sin(t % 10 * Math.PI) * Math.cos(t / 10 * Math.PI),
+                radius * Math.cos(t % 10 * Math.PI) * Math.cos(t / 10 * Math.PI)
+            )
+            rotX(point, rotX)
+            rotY(point, rotY)
+            rotZ(point, rotZ)
+            origin.add(point)
+            origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+            origin.subtract(point)
         }
     }
 
@@ -314,33 +369,38 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawAnimSpiralSphere(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-        new BukkitRunnable() {
-
-            int i = 0;
-
-            @Override
-            public void run() {
+    fun <T> drawAnimSpiralSphere(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        object : BukkitRunnable() {
+            var i = 0
+            override fun run() {
                 if (i < points) {
-                    double t = i * 8 * Math.PI / points;
-                    Vector point = new Vector(
-                            radius * Math.sin(t / 10 * Math.PI),
-                            radius * Math.sin((t % 10) * Math.PI) * Math.cos(t / 10 * Math.PI),
-                            radius * Math.cos((t % 10) * Math.PI) * Math.cos(t / 10 * Math.PI)
-                    );
-                    rotX(point, rotX);
-                    rotY(point, rotY);
-                    rotZ(point, rotZ);
-                    origin.add(point);
-                    origin.getWorld().spawnParticle(particle, origin, 1, data);
-                    origin.subtract(point);
+                    val t = i * 8 * Math.PI / points
+                    val point = Vector(
+                        radius * Math.sin(t / 10 * Math.PI),
+                        radius * Math.sin(t % 10 * Math.PI) * Math.cos(t / 10 * Math.PI),
+                        radius * Math.cos(t % 10 * Math.PI) * Math.cos(t / 10 * Math.PI)
+                    )
+                    rotX(point, rotX)
+                    rotY(point, rotY)
+                    rotZ(point, rotZ)
+                    origin.add(point)
+                    origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+                    origin.subtract(point)
                 } else {
-                    this.cancel();
+                    cancel()
                 }
-
-                i++;
+                i++
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(plugin, 0, 1)
     }
 
     /**
@@ -355,20 +415,29 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawAsteroid(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-        for (int i = 0; i < points; i++) {
-            double t = i * 8 * Math.PI / points;
-            Vector point = new Vector(
-                    radius * Math.pow(Math.cos(t), 3),
-                    0,
-                    radius * Math.pow(Math.sin(t), 3)
-            );
-            rotX(point, rotX);
-            rotY(point, rotY);
-            rotZ(point, rotZ);
-            origin.add(point);
-            origin.getWorld().spawnParticle(particle, origin, 1, data);
-            origin.subtract(point);
+    fun <T> drawAsteroid(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        for (i in 0 until points) {
+            val t = i * 8 * Math.PI / points
+            val point = Vector(
+                radius * Math.pow(Math.cos(t), 3.0),
+                0.0,
+                radius * Math.pow(Math.sin(t), 3.0)
+            )
+            rotX(point, rotX)
+            rotY(point, rotY)
+            rotZ(point, rotZ)
+            origin.add(point)
+            origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+            origin.subtract(point)
         }
     }
 
@@ -384,33 +453,38 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawAnimAsteroid(Location origin, Particle particle, T data, double radius, int points, double rotX, double rotY, double rotZ) {
-        new BukkitRunnable() {
-
-            int i = 0;
-
-            @Override
-            public void run() {
+    fun <T> drawAnimAsteroid(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        radius: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        object : BukkitRunnable() {
+            var i = 0
+            override fun run() {
                 if (i < points) {
-                    double t = i * 8 * Math.PI / points;
-                    Vector point = new Vector(
-                            radius * Math.pow(Math.cos(t), 3),
-                            0,
-                            radius * Math.pow(Math.sin(t), 3)
-                    );
-                    rotX(point, rotX);
-                    rotY(point, rotY);
-                    rotZ(point, rotZ);
-                    origin.add(point);
-                    origin.getWorld().spawnParticle(particle, origin, 1, data);
-                    origin.subtract(point);
+                    val t = i * 8 * Math.PI / points
+                    val point = Vector(
+                        radius * Math.pow(Math.cos(t), 3.0),
+                        0.0,
+                        radius * Math.pow(Math.sin(t), 3.0)
+                    )
+                    rotX(point, rotX)
+                    rotY(point, rotY)
+                    rotZ(point, rotZ)
+                    origin.add(point)
+                    origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+                    origin.subtract(point)
                 } else {
-                    this.cancel();
+                    cancel()
                 }
-
-                i++;
+                i++
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(plugin, 0, 1)
     }
 
     /**
@@ -425,20 +499,29 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawHeart(Location origin, Particle particle, T data, double size, int points, double rotX, double rotY, double rotZ) {
-        for (int i = 0; i < points; i++) {
-            double t = i * 2 * Math.PI / points;
-            Vector point = new Vector(
-                    size * (16 * Math.pow(Math.sin(t), 3)) / 3,
-                    0,
-                    size * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) / 3
-            );
-            rotX(point, rotX);
-            rotY(point, rotY);
-            rotZ(point, rotZ);
-            origin.add(point);
-            origin.getWorld().spawnParticle(particle, origin, 1, data);
-            origin.subtract(point);
+    fun <T> drawHeart(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        size: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        for (i in 0 until points) {
+            val t = i * 2 * Math.PI / points
+            val point = Vector(
+                size * (16 * Math.pow(Math.sin(t), 3.0)) / 3,
+                0.0,
+                size * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) / 3
+            )
+            rotX(point, rotX)
+            rotY(point, rotY)
+            rotZ(point, rotZ)
+            origin.add(point)
+            origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+            origin.subtract(point)
         }
     }
 
@@ -454,33 +537,38 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawAnimHeart(Location origin, Particle particle, T data, double size, int points, double rotX, double rotY, double rotZ) {
-        new BukkitRunnable() {
-
-            int i = 0;
-
-            @Override
-            public void run() {
+    fun <T> drawAnimHeart(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        size: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        object : BukkitRunnable() {
+            var i = 0
+            override fun run() {
                 if (i < points) {
-                    double t = i * 2 * Math.PI / points;
-                    Vector point = new Vector(
-                            size * (16 * Math.pow(Math.sin(t), 3)) / 3,
-                            0,
-                            size * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) / 3
-                    );
-                    rotX(point, rotX);
-                    rotY(point, rotY);
-                    rotZ(point, rotZ);
-                    origin.add(point);
-                    origin.getWorld().spawnParticle(particle, origin, 10, data);
-                    origin.subtract(point);
+                    val t = i * 2 * Math.PI / points
+                    val point = Vector(
+                        size * (16 * Math.pow(Math.sin(t), 3.0)) / 3,
+                        0.0,
+                        size * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) / 3
+                    )
+                    rotX(point, rotX)
+                    rotY(point, rotY)
+                    rotZ(point, rotZ)
+                    origin.add(point)
+                    origin.world.spawnParticle<T>(particle!!, origin, 10, data)
+                    origin.subtract(point)
                 } else {
-                    this.cancel();
+                    cancel()
                 }
-
-                i++;
+                i++
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(plugin, 0, 1)
     }
 
     /**
@@ -502,20 +590,33 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawLissajous(Location origin, Particle particle, T data, double A, double B, double a, double b, double delta, int points, double rotX, double rotY, double rotZ) {
-        for (int i = 0; i < points; i++) {
-            double t = i * 2 * Math.PI / points;
-            Vector point = new Vector(
-                    A * Math.sin(a * t + delta),
-                    0,
-                    B * Math.sin(b * t)
-            );
-            rotX(point, rotX);
-            rotY(point, rotY);
-            rotZ(point, rotZ);
-            origin.add(point);
-            origin.getWorld().spawnParticle(particle, origin, 10, data);
-            origin.subtract(point);
+    fun <T> drawLissajous(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        A: Double,
+        B: Double,
+        a: Double,
+        b: Double,
+        delta: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        for (i in 0 until points) {
+            val t = i * 2 * Math.PI / points
+            val point = Vector(
+                A * Math.sin(a * t + delta),
+                0.0,
+                B * Math.sin(b * t)
+            )
+            rotX(point, rotX)
+            rotY(point, rotY)
+            rotZ(point, rotZ)
+            origin.add(point)
+            origin.world.spawnParticle<T>(particle!!, origin, 10, data)
+            origin.subtract(point)
         }
     }
 
@@ -538,33 +639,42 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawAnimLissajous(Location origin, Particle particle, T data, double A, double B, double a, double b, double delta, int points, double rotX, double rotY, double rotZ) {
-        new BukkitRunnable() {
-
-            int i = 0;
-
-            @Override
-            public void run() {
+    fun <T> drawAnimLissajous(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        A: Double,
+        B: Double,
+        a: Double,
+        b: Double,
+        delta: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        object : BukkitRunnable() {
+            var i = 0
+            override fun run() {
                 if (i < points) {
-                    double t = i * 2 * Math.PI / points;
-                    Vector point = new Vector(
-                            A * Math.sin(a * t + delta),
-                            0,
-                            B * Math.sin(b * t)
-                    );
-                    rotX(point, rotX);
-                    rotY(point, rotY);
-                    rotZ(point, rotZ);
-                    origin.add(point);
-                    origin.getWorld().spawnParticle(particle, origin, 1, data);
-                    origin.subtract(point);
+                    val t = i * 2 * Math.PI / points
+                    val point = Vector(
+                        A * Math.sin(a * t + delta),
+                        0.0,
+                        B * Math.sin(b * t)
+                    )
+                    rotX(point, rotX)
+                    rotY(point, rotY)
+                    rotZ(point, rotZ)
+                    origin.add(point)
+                    origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+                    origin.subtract(point)
                 } else {
-                    this.cancel();
+                    cancel()
                 }
-
-                i++;
+                i++
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimer(plugin, 0, 1)
     }
 
     /**
@@ -579,20 +689,29 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawLimason(Location origin, Particle particle, T data, double size, int points, double rotX, double rotY, double rotZ) {
-        for (int i = 0; i < points; i++) {
-            double t = i * 2 * Math.PI / points;
-            Vector point = new Vector(
-                    size * (1 + 2 * Math.cos(t)) * Math.cos(t),
-                    0,
-                    size * (1 + 2 * Math.cos(t)) * Math.sin(t)
-            );
-            rotX(point, rotX);
-            rotY(point, rotY);
-            rotZ(point, rotZ);
-            origin.add(point);
-            origin.getWorld().spawnParticle(particle, origin, 1, data);
-            origin.subtract(point);
+    fun <T> drawLimason(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        size: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        for (i in 0 until points) {
+            val t = i * 2 * Math.PI / points
+            val point = Vector(
+                size * (1 + 2 * Math.cos(t)) * Math.cos(t),
+                0.0,
+                size * (1 + 2 * Math.cos(t)) * Math.sin(t)
+            )
+            rotX(point, rotX)
+            rotY(point, rotY)
+            rotZ(point, rotZ)
+            origin.add(point)
+            origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+            origin.subtract(point)
         }
     }
 
@@ -608,140 +727,167 @@ public class Drawing {
      * @param rotY:     Y軸回りに回転する角度
      * @param rotZ:     Z軸回りに回転する角度
      */
-    public <T> void drawAnimLimason(Location origin, Particle particle, T data, double size, int points, double rotX, double rotY, double rotZ) {
-        new BukkitRunnable() {
-
-            int i = 0;
-
-            @Override
-            public void run() {
-                if (i < points) {
-                    double t = i * 2 * Math.PI / points;
-                    Vector point = new Vector(
-                            size * (1 + 2 * Math.cos(t)) * Math.cos(t),
-                            0,
-                            size * (1 + 2 * Math.cos(t)) * Math.sin(t)
-                    );
-                    rotX(point, rotX);
-                    rotY(point, rotY);
-                    rotZ(point, rotZ);
-                    origin.add(point);
-                    origin.getWorld().spawnParticle(particle, origin, 1, data);
-                    origin.subtract(point);
-                } else {
-                    this.cancel();
-                }
-
-                i++;
-            }
-        }.runTaskTimer(plugin, 0, 1);
-    }
-
-    /**
-     * 指定したパーティクルでサイクロイドを描画するメソッド
-     *
-     * @param origin:    描画するLocation
-     * @param particle:  パーティクルの種類
-     * @param data       :    パーティクルのデータ
-     * @param a:         一回転の長さ
-     * @param scrollNum: 回転回数
-     * @param points:    図形を成す点の数
-     * @param rotX:      X軸回りに回転する角度
-     * @param rotY:      Y軸回りに回転する角度
-     * @param rotZ:      Z軸回りに回転する角度
-     */
-    public <T> void drawCycloid(Location origin, Particle particle, T data, double a, double scrollNum, int points, double rotX, double rotY, double rotZ) {
-        for (int i = 0; i < points; i++) {
-            double t = i * scrollNum * 2 * Math.PI / points;
-            Vector point = new Vector(
-                    a * (t - Math.sin(t)),
-                    0,
-                    a * (1 - Math.cos(t))
-            );
-            rotX(point, rotX);
-            rotY(point, rotY);
-            rotZ(point, rotZ);
-            origin.add(point);
-            origin.getWorld().spawnParticle(particle, origin, 1, data);
-            origin.subtract(point);
-        }
-    }
-
-    /**
-     * 指定したパーティクルでサイクロイドを描画するメソッド
-     *
-     * @param origin:    描画するLocation
-     * @param particle:  パーティクルの種類
-     * @param data       :    パーティクルのデータ
-     * @param a:         一回転の長さ
-     * @param scrollNum: 回転回数
-     * @param points:    図形を成す点の数
-     * @param rotX:      X軸回りに回転する角度
-     * @param rotY:      Y軸回りに回転する角度
-     * @param rotZ:      Z軸回りに回転する角度
-     */
-    public <T> void drawAnimCycloid(Location origin, Particle particle, T data, double a, double scrollNum, int points, double rotX, double rotY, double rotZ) {
-        new BukkitRunnable() {
-
-            int i = 0;
-
-            @Override
-            public void run() {
-                if (i < points) {
-                    double t = i * scrollNum * 2 * Math.PI / points;
-                    Vector point = new Vector(
-                            a * (t - Math.sin(t)),
-                            0,
-                            a * (1 - Math.cos(t))
-                    );
-                    rotX(point, rotX);
-                    rotY(point, rotY);
-                    rotZ(point, rotZ);
-                    origin.add(point);
-                    origin.getWorld().spawnParticle(particle, origin, 1, data);
-                    origin.subtract(point);
-                } else {
-                    this.cancel();
-                }
-
-                i++;
-            }
-        }.runTaskTimer(plugin, 0, 1);
-    }
-
-    public <T> void drawStar(
-            Location origin,
-            Particle particle,
-            T data,
-            double a,
-            double b,
-            double c,
-            double r0,
-            int n,
-            int points,
-            double rotX,
-            double rotY,
-            double rotZ
+    fun <T> drawAnimLimason(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        size: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
     ) {
-        double xmax = Math.sqrt(-(1 / Math.pow(b, 2)) * Math.log(2 * Math.pow(Math.E, -Math.pow(a, 2)) - 1));
-        for (int i = 0; i < points; i++) {
-            double t = i * 2 * Math.PI / points;
-            double r = r0 + 1 / c * Math.sqrt(-Math.log(2 * Math.pow(Math.E, -Math.pow(a, 2)) - Math.pow(Math.E, -Math.pow(b, 2) * Math.pow(xmax, 2) * Math.pow(Math.sin((t - Math.PI / 2) * n / 2), 2))));
-            Vector point = new Vector(
-                    r * Math.cos(t),
-                    0,
-                    r * Math.sin(t)
-            );
-            rotX(point, rotX);
-            rotY(point, rotY);
-            rotZ(point, rotZ);
-            origin.add(point);
-            origin.getWorld().spawnParticle(particle, origin, 1, data);
-            origin.subtract(point);
-        }
-
+        object : BukkitRunnable() {
+            var i = 0
+            override fun run() {
+                if (i < points) {
+                    val t = i * 2 * Math.PI / points
+                    val point = Vector(
+                        size * (1 + 2 * Math.cos(t)) * Math.cos(t),
+                        0.0,
+                        size * (1 + 2 * Math.cos(t)) * Math.sin(t)
+                    )
+                    rotX(point, rotX)
+                    rotY(point, rotY)
+                    rotZ(point, rotZ)
+                    origin.add(point)
+                    origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+                    origin.subtract(point)
+                } else {
+                    cancel()
+                }
+                i++
+            }
+        }.runTaskTimer(plugin, 0, 1)
     }
 
+    /**
+     * 指定したパーティクルでサイクロイドを描画するメソッド
+     *
+     * @param origin:    描画するLocation
+     * @param particle:  パーティクルの種類
+     * @param data       :    パーティクルのデータ
+     * @param a:         一回転の長さ
+     * @param scrollNum: 回転回数
+     * @param points:    図形を成す点の数
+     * @param rotX:      X軸回りに回転する角度
+     * @param rotY:      Y軸回りに回転する角度
+     * @param rotZ:      Z軸回りに回転する角度
+     */
+    fun <T> drawCycloid(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        a: Double,
+        scrollNum: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        for (i in 0 until points) {
+            val t = i * scrollNum * 2 * Math.PI / points
+            val point = Vector(
+                a * (t - Math.sin(t)),
+                0.0,
+                a * (1 - Math.cos(t))
+            )
+            rotX(point, rotX)
+            rotY(point, rotY)
+            rotZ(point, rotZ)
+            origin.add(point)
+            origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+            origin.subtract(point)
+        }
+    }
+
+    /**
+     * 指定したパーティクルでサイクロイドを描画するメソッド
+     *
+     * @param origin:    描画するLocation
+     * @param particle:  パーティクルの種類
+     * @param data       :    パーティクルのデータ
+     * @param a:         一回転の長さ
+     * @param scrollNum: 回転回数
+     * @param points:    図形を成す点の数
+     * @param rotX:      X軸回りに回転する角度
+     * @param rotY:      Y軸回りに回転する角度
+     * @param rotZ:      Z軸回りに回転する角度
+     */
+    fun <T> drawAnimCycloid(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        a: Double,
+        scrollNum: Double,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        object : BukkitRunnable() {
+            var i = 0
+            override fun run() {
+                if (i < points) {
+                    val t = i * scrollNum * 2 * Math.PI / points
+                    val point = Vector(
+                        a * (t - Math.sin(t)),
+                        0.0,
+                        a * (1 - Math.cos(t))
+                    )
+                    rotX(point, rotX)
+                    rotY(point, rotY)
+                    rotZ(point, rotZ)
+                    origin.add(point)
+                    origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+                    origin.subtract(point)
+                } else {
+                    cancel()
+                }
+                i++
+            }
+        }.runTaskTimer(plugin, 0, 1)
+    }
+
+    fun <T> drawStar(
+        origin: Location,
+        particle: Particle?,
+        data: T,
+        a: Double,
+        b: Double,
+        c: Double,
+        r0: Double,
+        n: Int,
+        points: Int,
+        rotX: Double,
+        rotY: Double,
+        rotZ: Double
+    ) {
+        val xmax = Math.sqrt(-(1 / Math.pow(b, 2.0)) * Math.log(2 * Math.pow(Math.E, -Math.pow(a, 2.0)) - 1))
+        for (i in 0 until points) {
+            val t = i * 2 * Math.PI / points
+            val r = r0 + 1 / c * Math.sqrt(
+                -Math.log(
+                    2 * Math.pow(Math.E, -Math.pow(a, 2.0)) - Math.pow(
+                        Math.E, -Math.pow(b, 2.0) * Math.pow(xmax, 2.0) * Math.pow(
+                            Math.sin((t - Math.PI / 2) * n / 2), 2.0
+                        )
+                    )
+                )
+            )
+            val point = Vector(
+                r * Math.cos(t),
+                0.0,
+                r * Math.sin(t)
+            )
+            rotX(point, rotX)
+            rotY(point, rotY)
+            rotZ(point, rotZ)
+            origin.add(point)
+            origin.world.spawnParticle<T>(particle!!, origin, 1, data)
+            origin.subtract(point)
+        }
+    }
 
     /**
      * 与えたVectorをX軸回りでtだけ回転させる
@@ -749,10 +895,10 @@ public class Drawing {
      * @param point: 回転させたいVector
      * @param t:     角度
      */
-    private void rotX(Vector point, double t) {
-        double y = point.getY();
-        point.setY(y * Math.cos(t) - point.getZ() * Math.sin(t));
-        point.setZ(y * Math.sin(t) + point.getZ() * Math.cos(t));
+    private fun rotX(point: Vector, t: Double) {
+        val y = point.y
+        point.y = y * cos(t) - point.z * sin(t)
+        point.z = y * sin(t) + point.z * cos(t)
     }
 
     /**
@@ -761,10 +907,10 @@ public class Drawing {
      * @param point: 回転させたいVector
      * @param t:     角度
      */
-    private void rotY(Vector point, double t) {
-        double z = point.getZ();
-        point.setZ(z * Math.cos(t) - point.getX() * Math.sin(t));
-        point.setX(z * Math.sin(t) + point.getX() * Math.cos(t));
+    private fun rotY(point: Vector, t: Double) {
+        val z = point.z
+        point.z = z * cos(t) - point.x * sin(t)
+        point.x = z * sin(t) + point.x * cos(t)
     }
 
     /**
@@ -773,10 +919,9 @@ public class Drawing {
      * @param point: 回転させたいVector
      * @param t:     角度
      */
-    private void rotZ(Vector point, double t) {
-        double x = point.getX();
-        point.setX(x * Math.cos(t) - point.getY() * Math.sin(t));
-        point.setY(x * Math.sin(t) + point.getY() * Math.cos(t));
+    private fun rotZ(point: Vector, t: Double) {
+        val x = point.x
+        point.x = x * cos(t) - point.y * sin(t)
+        point.y = x * sin(t) + point.y * cos(t)
     }
-
 }
